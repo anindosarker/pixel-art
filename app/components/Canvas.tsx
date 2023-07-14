@@ -12,7 +12,7 @@ export default function Canvas() {
 
   return (
     <div>
-      <ColorSelection />
+      
       <DrawingBoard />
     </div>
   );

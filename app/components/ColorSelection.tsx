@@ -1,7 +1,11 @@
 'use client';
 import React from "react";
 
-export default function ColorSelection() {
+interface ColorSelectionProps {
+    setSelectedColor: (color: string) => void;
+}
+
+export default function ColorSelection({ setSelectedColor }: ColorSelectionProps) {
   const rainbowColors = [
     "#FF0000",
     "#FF7F00",
@@ -13,7 +17,7 @@ export default function ColorSelection() {
   ];
 
   const handleColorClick = (color: string) => {
-    // Handle the color selection logic here
+    setSelectedColor(color);
     console.log(`Selected color: ${color}`);
   };
 
