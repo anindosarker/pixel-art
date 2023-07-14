@@ -28,7 +28,7 @@ export default function DrawingBoard() {
         (div) => div.row === row && div.col === col
       );
       const divStyle: React.CSSProperties = isSelected
-        ? { backgroundColor: "red" }
+        ? { backgroundColor: "teal" }
         : {};
 
       gridItems.push(
