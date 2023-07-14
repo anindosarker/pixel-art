@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useState } from "react";
 import DrawingBoard from "./DrawingBoard";
 import ColorSelection from "./ColorSelection";
@@ -11,8 +11,7 @@ export default function Canvas() {
   };
 
   return (
-    <div>
-      
+    <div className="">
       <DrawingBoard />
     </div>
   );

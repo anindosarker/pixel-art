@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import DrawingBoard from './components/DrawingBoard'
 import Canvas from './components/Canvas'
+import NewGrid from './components/NewGrid'
 
 export default function Home() {
   return (
