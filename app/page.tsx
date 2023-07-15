@@ -1,7 +1,5 @@
-import Image from 'next/image'
-import DrawingBoard from './components/DrawingBoard'
 import Canvas from './components/Canvas'
-import { getDatabase } from '@/db/connection';
+import { getDatabase } from '@/backend/db/connection';
 
 
 export default async function Home() {

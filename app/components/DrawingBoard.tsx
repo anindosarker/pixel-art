@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import ColorSelection from "./ColorSelection";
+import axios from "axios";
 
 interface DivColor {
   row: number;
@@ -12,7 +13,7 @@ export default function DrawingBoard() {
   const [selectedColor, setSelectedColor] = useState("");
   const gridSize: number = 64;
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
-  const isMouseDown = useRef(false); 
+  const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
 
   const handleDivClick = (row: number, col: number) => {
@@ -73,14 +74,33 @@ export default function DrawingBoard() {
     }
   }, [selectedDivs]);
 
-  const handleFinishClick = () => {
+  const handleFinishClick = async () => {
     const coloredDivs = selectedDivs
       .filter((div) => div.color)
       .map((div) => ({
-        index: `(${div.row}, ${div.col})`,
+        row: div.row,
+        col: div.col,
         color: div.color,
       }));
+
     console.log(coloredDivs);
+    try {
+      const response = await fetch("/api/createArt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(coloredDivs),
+      })
+        .then((res) => {
+          console.log(res.json());
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const renderGrid = () => {
