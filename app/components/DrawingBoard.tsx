@@ -1,6 +1,6 @@
 "use client";
+import React, { useState, useRef, useEffect } from "react";
 import ColorSelection from "./ColorSelection";
-import { useState } from "react";
 
 interface DivColor {
   row: number;
@@ -12,6 +12,8 @@ export default function DrawingBoard() {
   const [selectedColor, setSelectedColor] = useState("");
   const gridSize: number = 64;
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
+  const isMouseDown = useRef(false); 
+  const previousDiv = useRef<DivColor | null>(null);
 
   const handleDivClick = (row: number, col: number) => {
     const existingDiv = selectedDivs.find(
@@ -29,6 +31,47 @@ export default function DrawingBoard() {
     newSelectedDivs.push(newDiv);
     setSelectedDivs(newSelectedDivs);
   };
+
+  const handleDivEnter = (row: number, col: number) => {
+    if (isMouseDown.current) {
+      if (
+        !previousDiv.current ||
+        previousDiv.current.row !== row ||
+        previousDiv.current.col !== col
+      ) {
+        handleDivClick(row, col);
+      }
+    }
+  };
+
+  const handleMouseDown = () => {
+    isMouseDown.current = true;
+  };
+
+  const handleMouseUp = () => {
+    isMouseDown.current = false;
+    previousDiv.current = null;
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMouseDown.current) {
+      if (selectedDivs.length > 0) {
+        previousDiv.current = selectedDivs[selectedDivs.length - 1];
+      } else {
+        previousDiv.current = null;
+      }
+    }
+  }, [selectedDivs]);
 
   const handleFinishClick = () => {
     const coloredDivs = selectedDivs
@@ -52,6 +95,7 @@ export default function DrawingBoard() {
         row.push(
           <div
             key={`${i}-${j}`}
+            onMouseEnter={() => handleDivEnter(i, j)}
             onClick={() => handleDivClick(i, j)}
             style={{
               backgroundColor,
@@ -62,6 +106,7 @@ export default function DrawingBoard() {
               margin: 0,
               padding: 0,
             }}
+            className=""
           />
         );
       }
@@ -71,9 +116,7 @@ export default function DrawingBoard() {
         </div>
       );
     }
-    return (
-      <div className="flex flex-col">{grid}</div>
-    );
+    return <div className="flex flex-col">{grid}</div>;
   };
 
   return (

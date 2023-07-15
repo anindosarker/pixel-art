@@ -8,12 +8,24 @@ interface ColorProps {
 }
 
 const Color = ({ color, selected, onClick }: ColorProps) => {
+  if (color === "#ffffff") {
+    return (
+      <div
+        className="w-10 h-10 mx-2 cursor-pointer"
+        style={{
+          backgroundColor: color,
+          border: selected ? "2px solid rose-500" : "2px solid gray",
+        }}
+        onClick={onClick}
+      ></div>
+    );
+  }
   return (
     <div
-      className="w-10 h-10 rounded-full mx-2 cursor-pointer"
+      className="w-10 h-10 mx-2 cursor-pointer"
       style={{
         backgroundColor: color,
-        border: selected ? "2px solid black" : "none",
+        border: selected  ? "2px solid black" : "none",
       }}
       onClick={onClick}
     ></div>
@@ -22,13 +34,15 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
 
 export default function ColorSelection({ setSelectedColor }: any) {
   const rainbowColors = [
-    "#FF0000",
-    "#FF7F00",
-    "#FFFF00",
-    "#00FF00",
-    "#0000FF",
-    "#4B0082",
-    "#8B00FF",
+    "#fff707",
+    "#ffffff",
+    "#000000",
+    "#fe0000",
+    "#0035ff",
+    "#15d200",
+    "#5508ff",
+    "#ff41a1",
+    "#ff5730",
   ];
   const [selected, setSelected] = useState<string>("");
 
