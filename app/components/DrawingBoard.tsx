@@ -72,7 +72,7 @@ export default function DrawingBoard() {
       );
     }
     return (
-      <div style={{ display: "flex", flexDirection: "column" }}>{grid}</div>
+      <div className="flex flex-col">{grid}</div>
     );
   };
 
