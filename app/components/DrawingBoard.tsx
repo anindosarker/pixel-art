@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ColorSelection from "./ColorSelection";
 import axios from "axios";
+import html2canvas from "html2canvas";
 
 interface DivColor {
   row: number;
@@ -84,6 +85,17 @@ export default function DrawingBoard() {
       }));
 
     console.log(coloredDivs);
+    const board = document.getElementById("drawing-board");
+    if (board) {
+      html2canvas(board).then((canvas) => {
+        const dataUrl = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.download = "art.png";
+        link.href = dataUrl;
+        link.click();
+      });
+    }
+
     try {
       const response = await fetch("/api/createArt", {
         method: "POST",
@@ -142,7 +154,9 @@ export default function DrawingBoard() {
   return (
     <div className="flex flex-col items-center justify-center">
       <ColorSelection setSelectedColor={setSelectedColor} />
-      {renderGrid()}
+      <div className="" id="drawing-board">
+        {renderGrid()}
+      </div>
       <button
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={handleFinishClick}
