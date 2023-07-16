@@ -123,7 +123,7 @@ export default function DrawingBoard() {
         const existingDiv = selectedDivs.find(
           (div) => div.row === i && div.col === j
         );
-        const backgroundColor = existingDiv ? existingDiv.color : "white";
+        const backgroundColor = existingDiv ? existingDiv.color : "black";
         row.push(
           <div
             key={`${i}-${j}`}
@@ -133,7 +133,7 @@ export default function DrawingBoard() {
               backgroundColor,
               width: "10px",
               height: "10px",
-              border: "1px solid black",
+              border: "1px solid white",
               display: "inline-block",
               margin: 0,
               padding: 0,
@@ -153,9 +153,11 @@ export default function DrawingBoard() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <ColorSelection setSelectedColor={setSelectedColor} />
-      <div className="" id="drawing-board">
-        {renderGrid()}
+      <div className="flex flex-row items-center">
+        <ColorSelection setSelectedColor={setSelectedColor} />
+        <div className="" id="drawing-board">
+          {renderGrid()}
+        </div>
       </div>
       <button
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

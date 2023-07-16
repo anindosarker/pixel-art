@@ -11,7 +11,7 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
   if (color === "#ffffff") {
     return (
       <div
-        className="w-10 h-10 mx-2 cursor-pointer"
+        className="w-10 h-10 mx-2 cursor-pointer rounded-full"
         style={{
           backgroundColor: color,
           border: selected ? "2px solid rose-500" : "2px solid gray",
@@ -22,7 +22,7 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
   }
   return (
     <div
-      className="w-10 h-10 mx-2 cursor-pointer"
+      className="w-10 h-10 mx-2 cursor-pointer rounded-full"
       style={{
         backgroundColor: color,
         border: selected  ? "2px solid black" : "none",
@@ -53,7 +53,7 @@ export default function ColorSelection({ setSelectedColor }: any) {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto bg-white rounded-lg shadow-md mb-2">
+    <div className="p-4 h-16  mr-5 bg-white rounded-lg shadow-md mb-2">
       <div className="flex justify-center mb-4">
         {rainbowColors.map((color, index) => (
           <Color
