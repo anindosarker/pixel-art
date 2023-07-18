@@ -89,6 +89,7 @@ export default function DrawingBoard() {
     if (board) {
       html2canvas(board).then((canvas) => {
         const dataUrl = canvas.toDataURL("image/png");
+        
         const link = document.createElement("a");
         link.download = "art.png";
         link.href = dataUrl;
