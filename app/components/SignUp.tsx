@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function SignUp() {
@@ -9,6 +10,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const router = useRouter();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -16,7 +18,7 @@ export default function SignUp() {
       setPasswordsMatch(false);
     } else {
       setPasswordsMatch(true);
-      console.log({ email, username, password, confirmPassword });
+      
       const data = { email, username, password };
       axios
         .post("/api/createUser", data)
@@ -31,6 +33,7 @@ export default function SignUp() {
           setUsername("");
           setPassword("");
           setConfirmPassword("");
+          router.push("/login");
         });
     }
   };
