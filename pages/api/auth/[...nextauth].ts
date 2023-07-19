@@ -2,6 +2,7 @@ import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import User from "../../../backend/models/User";
+import { getDatabase } from "@/backend/db/connection";
 
 export const authOptions: AuthOptions = {
     providers: [
@@ -14,7 +15,7 @@ export const authOptions: AuthOptions = {
             async authorize(credentials) {
                 console.log("credentials", credentials)
                 if (!credentials?.email || !credentials?.password) throw new Error("Missing credentials");
-
+                await getDatabase();
                 const user = await User.findOne({ email: credentials.email });
                 console.log("user", user)
                 if (!user || !user?.hashedPassword) {

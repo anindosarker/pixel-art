@@ -1,28 +1,32 @@
-'use client';
-import React, { useState } from 'react'
-import {signIn} from 'next-auth/react'
+"use client";
+import React, { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = { email, password };
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = { email, password };
 
-        signIn('credentials', {
-            email: email,
-            password: password,
-            redirect: false,
-        }).then((callback)=> {
-            if (callback?.ok) {
-                console.log("success")
-            } else {
-                setErrorMsg("Invalid login")
-            }
-        })
-    }
+    signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    }).then((callback) => {
+      if (callback?.ok) {
+        console.log("success");
+        setErrorMsg("");
+        router.push("/");
+      } else {
+        setErrorMsg("Invalid login");
+      }
+    });
+  };
 
   return (
     <div className="max-w-md mx-auto mt-8">
@@ -41,7 +45,7 @@ export default function LoginPage() {
               onChange={(event) => setEmail(event.target.value)}
             />
           </div>
-          
+
           <div className="mb-4">
             <label htmlFor="password" className="block font-medium mb-2">
               Password
@@ -54,7 +58,7 @@ export default function LoginPage() {
               onChange={(event) => setPassword(event.target.value)}
             />
           </div>
-            {errorMsg && <p className="text-red-500 mb-4">{errorMsg}</p>}
+          {errorMsg && <p className="text-red-500 mb-4">{errorMsg}</p>}
           <button
             type="submit"
             className="bg-blue-500 text-white rounded-lg px-4 py-2"

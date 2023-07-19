@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export default function SignUp() {
@@ -99,6 +100,12 @@ export default function SignUp() {
             Submit
           </button>
         </form>
+        <div className="p-5 mt-5 text-center">
+          Already have an account?{" "}
+          <Link href="/login" className="text-blue-400">
+            Login
+          </Link>
+        </div>
       </div>
     </div>
   );
