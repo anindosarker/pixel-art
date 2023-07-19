@@ -84,14 +84,19 @@ export default function DrawingBoard() {
         color: div.color,
       }));
 
-    console.log(coloredDivs);
+    console.log(coloredDivs.sort((a, b) => a.row - b.row));
     const board = document.getElementById("drawing-board");
     if (board) {
       html2canvas(board).then((canvas) => {
         const dataUrl = canvas.toDataURL("image/png");
-        
+
         const link = document.createElement("a");
-        link.download = "art.png";
+        const currentDateTime = new Date().toISOString().replace(/[-:.]/g, "");
+        const randomImageName = `${currentDateTime}-${
+          Math.random().toString(36).substring(2, 15) +
+          Math.random().toString(36).substring(2, 15)
+        }.png`;
+        link.download = randomImageName;
         link.href = dataUrl;
         link.click();
       });
