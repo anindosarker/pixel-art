@@ -5,25 +5,7 @@ interface IArts extends Document {
 }
 
 const ArtsSchema: Schema = new Schema({
-    userArt: {
-        type: [
-            {
-                row: {
-                    type: Number,
-                    required: true,
-                },
-                col: {
-                    type: Number,
-                },
-                color: {
-                    type: String,
-                    required: true,
-                },
-            },
-        ],
-        required: true,
-        unique: true,
-    },
+ 
 });
 
 const Arts: Model<IArts> =
