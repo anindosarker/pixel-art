@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ColorSelection from "./ColorSelection";
 import axios from "axios";
 import html2canvas from "html2canvas";
+import { useSession } from "next-auth/react";
 
 interface DivColor {
   row: number;
@@ -16,6 +17,8 @@ export default function DrawingBoard() {
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
+  const { data: session } = useSession();
+  console.log(session);
 
   const handleDivClick = (row: number, col: number) => {
     const existingDiv = selectedDivs.find(
@@ -85,6 +88,7 @@ export default function DrawingBoard() {
       }));
 
     console.log(coloredDivs.sort((a, b) => a.row - b.row));
+
     const board = document.getElementById("drawing-board");
     if (board) {
       html2canvas(board).then((canvas) => {
@@ -98,27 +102,22 @@ export default function DrawingBoard() {
         }.png`;
         link.download = randomImageName;
         link.href = dataUrl;
-        link.click();
+        // link.click();
       });
     }
 
-    try {
-      const response = await fetch("/api/createArt", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(coloredDivs),
+    const data = { coloredDivs, email: session?.user?.email };
+    axios
+      .post("/api/createArt", data)
+      .then((response) => {
+        console.log(response);
       })
-        .then((res) => {
-          console.log(res.json());
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    } catch (error) {
-      console.error(error);
-    }
+      .catch((error) => {
+        console.log(error.message);
+      })
+      .finally(() => {
+        setSelectedDivs([]);
+      });
   };
 
   const renderGrid = () => {

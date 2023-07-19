@@ -1,37 +1,28 @@
-import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Arts from '@/backend/models/Arts';
+import User from '@/backend/models/User';
 
 export async function POST(request: Request, response: Response) {
     const data = await request.json();
     console.log(data);
-    try {
-        const art = data;
 
-        // Check if the art already exists in the collection
-        const artExists = await Arts.findOne({
-            userArt: {
-                $elemMatch: {
-                    row: art.row,
-                    col: art.col,
-                    color: art.color
-                }
-            }
-        });
+    const user = await User.findOne({
+        email: data.email,
+    });
 
-        if (artExists) {
-            return NextResponse.json({ message: "Art already exists" });
-        }
+    if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-        // Create a new art document if it doesn't exist
-        const newArt = await Arts.create({
-            userArt: art
-        });
+    const art = await Arts.create({
+        userArt: data.coloredDivs,
+        userId: user._id,
+        review: 0,
+        artImg: '',
+    });
+    console.log(art)
+    user.arts.push(art._id);
 
-        console.log(newArt);
-        return NextResponse.json({ newArt });
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json({ error });
-    }
+    await user.save();
+    await art.save();
+
+    return NextResponse.json(art);
 }
