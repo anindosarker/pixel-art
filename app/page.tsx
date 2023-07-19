@@ -3,17 +3,12 @@ import Canvas from './components/Canvas'
 import { getDatabase } from '@/backend/db/connection';
 import Grid from './components/Grid';
 import getCurrentUser from './action/getCurrentUser';
+import SignUp from './components/SignUp';
 
 
 export default async function Home() {
-  await getDatabase();
-  const currentUser = await getCurrentUser();
   
-  if (!currentUser) {
-    return (
-      <div className="">not signed in</div>
-    )
-  }
+  await getDatabase();
 
   return (
     <div className="flex flex-col gap-5 items-center justify-center bg-black p-5">

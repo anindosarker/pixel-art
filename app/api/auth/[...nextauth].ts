@@ -12,10 +12,11 @@ export const authOptions: AuthOptions = {
                 password: { label: "password", type: "password" },
             },
             async authorize(credentials) {
+                console.log("credentials", credentials)
                 if (!credentials?.email || !credentials?.password) throw new Error("Missing credentials");
 
                 const user = await User.findOne({ email: credentials.email });
-
+                console.log("user", user)
                 if (!user || !user?.hashedPassword) {
                     throw new Error("Invalid credentials");
                 }
@@ -31,7 +32,7 @@ export const authOptions: AuthOptions = {
         }),
     ],
     pages: {
-        signIn: "/"
+        signIn: "/",
     },
     debug: process.env.NODE_ENV === "development",
     session: {

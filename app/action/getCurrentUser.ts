@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth"
-import { authOptions } from "@/pages/api/auth/[...nextauth]"
+import { authOptions } from "../api/auth/[...nextauth]"
 import User from "@/backend/models/User"
 
 export async function getSession() {
