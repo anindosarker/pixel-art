@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import artImg from "../../public/images/art (3).png"
+import artImg from "../../public/images/art (3).png";
 
 export default function ArtComponent() {
   return (
@@ -10,29 +10,24 @@ export default function ArtComponent() {
           <Image
             src={artImg}
             alt=""
-            width={600}
-            height={600}
+            width={300}
+            height={300}
             className="object-cover rounded-md"
           />
         </div>
 
         <div>
-          <strong className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
-            Episode #101
-          </strong>
-
           <h3 className="mt-4 text-lg font-medium sm:text-xl">
             <a href="" className="hover:underline">
               {" "}
-              Some Interesting Podcast Title{" "}
+              Ethun Hunt{" "}
             </a>
           </h3>
 
-          <p className="mt-1 text-sm text-gray-700">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam
-            nulla amet voluptatum sit rerum, atque, quo culpa ut necessitatibus
-            eius suscipit eum accusamus, aperiam voluptas exercitationem facere
-            aliquid fuga. Sint.
+          <p className="mt-1 text-sm text-white">
+            review section Lorem ipsum, dolor sit amet consectetur adipisicing
+            elit. Minima quasi exercitationem magnam velit ut ipsa suscipit
+            repellat amet in beatae!
           </p>
 
           <div className="mt-4 sm:flex sm:items-center sm:gap-2">
@@ -52,27 +47,8 @@ export default function ArtComponent() {
                 ></path>
               </svg>
 
-              <p className="text-xs font-medium">48:32 minutes</p>
+              <p className="text-sm font-medium">48:32 minutes ago</p>
             </div>
-
-            <span className="hidden sm:block" aria-hidden="true">
-              &middot;
-            </span>
-
-            <p className="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
-              Featuring{" "}
-              <a href="#" className="underline hover:text-gray-700">
-                Barry
-              </a>
-              ,
-              <a href="#" className="underline hover:text-gray-700">
-                Sandra
-              </a>{" "}
-              and
-              <a href="#" className="underline hover:text-gray-700">
-                August
-              </a>
-            </p>
           </div>
         </div>
       </div>
