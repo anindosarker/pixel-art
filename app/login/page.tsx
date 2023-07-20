@@ -27,7 +27,7 @@ export default function Login() {
     }
     console.log("👉️ ~ file: page.tsx:22 ~ handleSignUp ~ data:\n", data);
     toast.success("Logged in successfully", { id: notification });
-    router.push("/products");
+    router.push("/");
   };
   return (
     <>
@@ -40,7 +40,7 @@ export default function Login() {
 
         <div className="flex flex-row justify-center items-center gap-4">
           <a
-            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-[#171515] focus:outline-none focus:ring active:opacity-75"
+            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-blue-400 focus:outline-none focus:ring active:opacity-75"
             href="/github"
             target="_blank"
             rel="noreferrer"
@@ -49,7 +49,7 @@ export default function Login() {
           </a>
 
           <a
-            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-[#171515] focus:outline-none focus:ring active:opacity-75"
+            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-blue-400 focus:outline-none focus:ring active:opacity-75"
             href="/github"
             target="_blank"
             rel="noreferrer"
@@ -73,11 +73,10 @@ export default function Login() {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
                 />
               </div>
             </div>
-
             <div>
               <div className="flex items-center justify-between">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -94,15 +93,15 @@ export default function Login() {
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
                 />
               </div>
             </div>
-
+            asdfsda
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md border border-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex w-full justify-center rounded-md border border-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 onClick={handleLogin}
               >
                 Login
@@ -114,7 +113,7 @@ export default function Login() {
             Don&apos;t have an account?{" "}
             <Link
               href="/signup"
-              className="font-semibold leading-6 text-white hover:underline"
+              className="font-semibold leading-6 pl-2 text-white hover:underline"
             >
               Sign up
             </Link>

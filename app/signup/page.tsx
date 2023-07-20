@@ -35,7 +35,7 @@ export default function Signup() {
       return;
     }
     toast.success("Signed up successfully", { id: notification });
-    router.push("/products");
+    router.push("/");
   };
 
   useEffect(() => {
@@ -50,14 +50,14 @@ export default function Signup() {
     <>
       <div className="flex min-h-full flex-col justify-center items-center px-6 py-12 lg:px-8 gap-7 mt-28">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className=" text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className=" text-center text-2xl font-bold leading-9 tracking-tight text-white">
             Create your account
           </h2>
         </div>
 
         <div className="flex flex-row justify-center items-center gap-4">
           <a
-            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-[#171515] focus:outline-none focus:ring active:opacity-75"
+            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-blue-400 focus:outline-none focus:ring active:opacity-75"
             href="/github"
             target="_blank"
             rel="noreferrer"
@@ -66,7 +66,7 @@ export default function Signup() {
           </a>
 
           <a
-            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-[#171515] focus:outline-none focus:ring active:opacity-75"
+            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-blue-400 focus:outline-none focus:ring active:opacity-75"
             href="/github"
             target="_blank"
             rel="noreferrer"
@@ -78,7 +78,7 @@ export default function Signup() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSignup}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block text-sm font-medium leading-6 text-white">
                 Email address
               </label>
               <div className="mt-2">
@@ -90,14 +90,14 @@ export default function Signup() {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
+                <label className="block text-sm font-medium leading-6 text-white">
                   Password
                 </label>
                 <div className="text-sm"></div>
@@ -115,13 +115,13 @@ export default function Signup() {
                     setPassword(e.target.value);
                   }}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block text-sm font-medium leading-6">
                 Confirm Password
               </label>
               <div className="mt-2">
@@ -136,7 +136,7 @@ export default function Signup() {
                   onChange={(e) => {
                     setConfirmPassword(e.target.value);
                   }}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
+                  className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6 outline-none px-3"
                 />
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function Signup() {
               <button
                 disabled={!passwordMatch}
                 type="submit"
-                className="flex disabled:bg-gray-400 disabled:cursor-not-allowed w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex disabled:bg-gray-400 disabled:cursor-not-allowed w-full justify-center rounded-md border border-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 onClick={handleSignup}
               >
                 Sign Up
@@ -153,11 +153,11 @@ export default function Signup() {
             </div>
           </form>
 
-          <p className="mt-4 text-center text-sm text-gray-500">
-            Already Have an Account?
+          <p className="mt-4 text-center text-sm text-gray-400">
+            Already Have an Account?{" "}
             <Link
               href="/login"
-              className="font-semibold leading-6 text-black hover:text-slate-900"
+              className="font-semibold leading-6 pl-2 text-white hover:underline"
             >
               Login
             </Link>
