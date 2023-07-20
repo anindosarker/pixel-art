@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { BsFacebook, BsGoogle } from "react-icons/bs";
+import { BsGoogle } from "react-icons/bs";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -47,21 +47,12 @@ export default function Login() {
           >
             <BsGoogle />
           </a>
-
-          <a
-            className="inline-flex items-center gap-2 rounded border-2 border-[#171515] bg-[#171515] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-blue-400 focus:outline-none focus:ring active:opacity-75"
-            href="/github"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <BsFacebook />
-          </a>
         </div>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleLogin}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block text-sm font-medium leading-6 text-white">
                 Email address
               </label>
               <div className="mt-2">
@@ -79,7 +70,7 @@ export default function Login() {
             </div>
             <div>
               <div className="flex items-center justify-between">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
+                <label className="block text-sm font-medium leading-6 text-white">
                   Password
                 </label>
                 <div className="text-sm"></div>
@@ -97,7 +88,6 @@ export default function Login() {
                 />
               </div>
             </div>
-            asdfsda
             <div>
               <button
                 type="submit"
