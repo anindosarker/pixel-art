@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "063b5d10-57af-4fc9-9c45-f1b294e97461",
+		"name": "PixelArt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20447149"
+	},
+	"item": [
+		{
+			"name": "arts",
+			"item": [
+				{
+					"name": "Get arts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/arts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"arts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new art",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"art_array\": [\n        {\n            \"col\": 0,\n            \"row\": 60,\n            \"color\": \"#5509ff\"\n        },\n        {\n            \"col\": 0,\n            \"row\": 61,\n            \"color\": \"#5508ff\"\n        },\n        {\n            \"col\": 0,\n            \"row\": 62,\n            \"color\": \"#5508ff\"\n        },\n        {\n            \"col\": 0,\n            \"row\": 64,\n            \"color\": \"#5508ff\"\n        }\n    ],\n    \"image_url\": null,\n    \"user_id\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/arts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"arts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "review",
+			"item": [
+				{
+					"name": "Get reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 3,\n    \"art_id\": 1,\n    \"description\": \"cdi\",\n    \"user_id\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
