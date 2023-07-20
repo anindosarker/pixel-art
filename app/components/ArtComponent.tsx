@@ -1,19 +1,47 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import artImg from "../../public/images/art (3).png";
+import axios from "axios";
 
 export default function ArtComponent() {
+    const grid = [];
+    for (let i = 0; i < 64; i++) {
+      const row = [];
+      for (let j = 0; j < 64; j++) {
+        row.push(
+          <div
+            key={`${i}-${j}`}
+            className="w-2 h-2 bg-black border border-white"
+          ></div>
+        );
+      }
+      grid.push(
+        <div key={i} className="flex">
+          {row}
+        </div>
+      );
+    }
+
+    const getAllArts = async () => {
+      const response = await axios.get("http://localhost:3000/api/art");
+      console.log(response);
+    };
+
+    getAllArts();
+
   return (
     <article className="rounded-xl bg-black border border-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
       <div className="flex items-start sm:gap-8">
-        <div>
-          <Image
+        <div className="">
+          {/* <Image
             src={artImg}
             alt=""
             width={300}
             height={300}
             className="object-cover rounded-md"
-          />
+          /> */}
+          {grid}
         </div>
 
         <div>

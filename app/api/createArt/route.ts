@@ -22,7 +22,7 @@ export async function POST(request: Request, response: Response) {
         userArt: data.coloredDivs,
         userId: user._id,
         review: 0,
-        artImg: '',
+        artImg: data.imageUrl
     });
     console.log(art)
     user.arts.push(art._id);

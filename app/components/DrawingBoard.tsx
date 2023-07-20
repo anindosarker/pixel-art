@@ -99,7 +99,6 @@ export default function DrawingBoard() {
     if (board) {
       html2canvas(board).then((canvas) => {
         const dataUrl = canvas.toDataURL("image/png");
-
         const link = document.createElement("a");
         const currentDateTime = new Date().toISOString().replace(/[-:.]/g, "");
         const randomImageName = `${currentDateTime}-${
@@ -113,6 +112,7 @@ export default function DrawingBoard() {
     }
 
     const data = { coloredDivs, email: session?.user?.email };
+    console.log(data)
     axios
       .post("/api/createArt", data)
       .then((response) => {
