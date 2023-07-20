@@ -12,6 +12,12 @@ export async function POST(request: Request, response: Response) {
 
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
+    const isArtExist = await Arts.findOne({
+        userArt: data.coloredDivs,
+    });
+    console.log(isArtExist)
+    if (isArtExist) return NextResponse.json({ error: "Art already exist" }, { status: 400 });
+
     const art = await Arts.create({
         userArt: data.coloredDivs,
         userId: user._id,

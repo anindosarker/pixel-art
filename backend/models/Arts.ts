@@ -11,7 +11,7 @@ interface IArts extends Document {
 const ArtsSchema: Schema = new Schema({
     userArt: {
         type: Array,
-        unique: true,
+        // unique: true,
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

@@ -13,12 +13,12 @@ interface DivColor {
 
 export default function DrawingBoard() {
   const [selectedColor, setSelectedColor] = useState("");
+  const [artExistsMsg, setArtExistsMsg] = useState("");
   const gridSize: number = 64;
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
   const { data: session } = useSession();
-  console.log(session);
 
   const handleDivClick = (row: number, col: number) => {
     const existingDiv = selectedDivs.find(
@@ -87,7 +87,10 @@ export default function DrawingBoard() {
         color: div.color,
       }));
 
-    console.log(coloredDivs.sort((a, b) => a.row - b.row));
+    coloredDivs.sort((a, b) => a.row - b.row);
+    coloredDivs.sort((a, b) => a.col - b.col);
+
+    console.log(coloredDivs);
 
     const board = document.getElementById("drawing-board");
     if (board) {
@@ -111,12 +114,14 @@ export default function DrawingBoard() {
       .post("/api/createArt", data)
       .then((response) => {
         console.log(response);
+        setSelectedDivs([]);
+        setArtExistsMsg("");
       })
       .catch((error) => {
         console.log(error.message);
-      })
-      .finally(() => {
-        setSelectedDivs([]);
+        if (error.response.status === 400) {
+          setArtExistsMsg("Art already exists");
+        }
       });
   };
 
@@ -170,6 +175,7 @@ export default function DrawingBoard() {
       >
         Finish
       </button>
+      <div className="text-red-500">{artExistsMsg}</div>
     </div>
   );
 }
