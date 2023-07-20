@@ -4,10 +4,13 @@ import { getDatabase } from "@/backend/db/connection";
 import getCurrentUser from "./action/getCurrentUser";
 import SignUp from "./components/SignUp";
 import Navbar from "./components/Navbar";
+import RenderArts from "./components/RenderArts";
+import getAllArts from "./action/getAllArts";
 
 export default async function Home() {
   await getDatabase();
   const currentUser = await getCurrentUser();
+
   if (currentUser) {
     return (
       <>
@@ -18,9 +21,7 @@ export default async function Home() {
           </div>
           <Canvas />
           <div className="flex flex-col gap-4 w-1/2">
-            <ArtComponent />
-            <ArtComponent />
-            <ArtComponent />
+            <RenderArts/>
           </div>
         </div>
       </>

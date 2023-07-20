@@ -1,34 +1,44 @@
-'use client';
+"use client";
 import React from "react";
 import Image from "next/image";
 import artImg from "../../public/images/art (3).png";
 import axios from "axios";
 
-export default function ArtComponent() {
-    const grid = [];
-    for (let i = 0; i < 64; i++) {
-      const row = [];
-      for (let j = 0; j < 64; j++) {
-        row.push(
-          <div
-            key={`${i}-${j}`}
-            className="w-2 h-2 bg-black border border-white"
-          ></div>
-        );
-      }
-      grid.push(
-        <div key={i} className="flex">
-          {row}
-        </div>
+interface ArtComponentProps {
+  userArt: any;
+}
+
+export default function ArtComponent({ userArt }: ArtComponentProps) {
+  console.log(userArt.userArt);
+  const grid = [];
+
+  for (let i = 0; i < 64; i++) {
+    const row: any = [];
+    for (let j = 0; j < 64; j++) {
+      // row.push(
+      //   <div
+      //     key={`${i}-${j}`}
+      //     className="w-2 h-2 bg-black border border-white"
+      //   ></div>
+      // );
+      const cellColor = userArt.userArt.find(
+        (cell: any) => cell.row === i && cell.col === j
+      )?.color;
+      row.push(
+        <div
+          key={`${i}-${j}`}
+          className="w-1 h-1 border-white"
+          style={{ backgroundColor: cellColor }}
+        ></div>
       );
     }
 
-    const getAllArts = async () => {
-      const response = await axios.get("http://localhost:3000/api/art");
-      console.log(response);
-    };
-
-    getAllArts();
+    grid.push(
+      <div key={i} className="flex">
+        {row}
+      </div>
+    );
+  }
 
   return (
     <article className="rounded-xl bg-black border border-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
@@ -48,7 +58,7 @@ export default function ArtComponent() {
           <h3 className="mt-4 text-lg font-medium sm:text-xl">
             <a href="" className="hover:underline">
               {" "}
-              Ethun Hunt{" "}
+              {userArt.userId.username}{" "}
             </a>
           </h3>
 

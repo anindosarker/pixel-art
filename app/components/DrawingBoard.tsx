@@ -5,6 +5,7 @@ import axios from "axios";
 import html2canvas from "html2canvas";
 import { useSession } from "next-auth/react";
 import ButtonLoader from "./ButtonLoader";
+import { useRouter } from "next/navigation";
 
 interface DivColor {
   row: number;
@@ -13,6 +14,7 @@ interface DivColor {
 }
 
 export default function DrawingBoard() {
+  const router = useRouter();
   const [artSubmitting, setArtSubmitting] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
@@ -112,7 +114,7 @@ export default function DrawingBoard() {
     }
 
     const data = { coloredDivs, email: session?.user?.email };
-    console.log(data)
+    console.log(data);
     axios
       .post("/api/createArt", data)
       .then((response) => {
@@ -178,9 +180,7 @@ export default function DrawingBoard() {
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={handleFinishClick}
       >
-        {artSubmitting ? (
-          <ButtonLoader />
-        ) : "Finish"}
+        {artSubmitting ? <ButtonLoader /> : "Finish"}
       </button>
       <div className="text-red-500">{artExistsMsg}</div>
     </div>
