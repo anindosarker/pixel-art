@@ -2,27 +2,34 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ArtComponent from "./ArtComponent";
 import axios from "axios";
-import ButtonLoader from "./ButtonLoader";
-import Loader from "./Loader";
-
+import { Ring } from "@uiball/loaders";
 
 export default function RenderArts() {
   const [arts, setArts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
- const getAllArts = useCallback(async () => {
+  const getAllArts = useCallback(async () => {
+    setLoading(true);
     const response = await axios.get("/api/art");
-    console.log(response.data)
+
     setArts(response.data);
- }, [setArts]);
+    setLoading(false);
+  }, [setArts]);
 
   useEffect(() => {
     getAllArts();
   }, [getAllArts]);
 
+  if (loading) {
+    return <div className="flex items-center justify-center">
+    <Ring color="#fff" />
+    </div>;
+
+  }
 
   return (
-    <div>
-      {arts.map((art,idx) => (
+    <div className="">
+      {arts.map((art, idx) => (
         <ArtComponent key={idx} userArt={art} />
       ))}
     </div>

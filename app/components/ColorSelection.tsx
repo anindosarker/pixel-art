@@ -49,7 +49,6 @@ export default function ColorSelection({ setSelectedColor }: any) {
   const handleColorClick = (color: string) => {
     setSelectedColor(color);
     setSelected(color);
-    console.log(`Selected color: ${color}`);
   };
 
   return (

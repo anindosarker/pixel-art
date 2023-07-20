@@ -9,7 +9,6 @@ interface ArtComponentProps {
 }
 
 export default function ArtComponent({ userArt }: ArtComponentProps) {
-  console.log(userArt.userArt);
   const grid = [];
 
   for (let i = 0; i < 64; i++) {
@@ -41,7 +40,7 @@ export default function ArtComponent({ userArt }: ArtComponentProps) {
   }
 
   return (
-    <article className="rounded-xl bg-black border border-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
+    <article className="rounded-xl bg-black border border-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 mb-5">
       <div className="flex items-start sm:gap-8">
         <div className="">
           {/* <Image
@@ -85,7 +84,9 @@ export default function ArtComponent({ userArt }: ArtComponentProps) {
                 ></path>
               </svg>
 
-              <p className="text-sm font-medium">48:32 minutes ago</p>
+              <p className="text-sm font-medium">
+                {userArt.creatdAt}
+              </p>
             </div>
           </div>
         </div>

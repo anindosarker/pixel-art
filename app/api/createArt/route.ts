@@ -15,6 +15,7 @@ export async function POST(request: Request, response: Response) {
     const isArtExist = await Arts.findOne({
         userArt: data.coloredDivs,
     });
+    
     console.log(isArtExist)
     if (isArtExist) return NextResponse.json({ error: "Art already exist" }, { status: 400 });
 

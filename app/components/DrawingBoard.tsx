@@ -83,7 +83,6 @@ export default function DrawingBoard() {
   }, [selectedDivs]);
 
   const handleFinishClick = async () => {
-    setArtSubmitting(true);
     const coloredDivs = selectedDivs
       .filter((div) => div.color)
       .map((div) => ({
@@ -101,6 +100,7 @@ export default function DrawingBoard() {
     if (board) {
       html2canvas(board).then((canvas) => {
         const dataUrl = canvas.toDataURL("image/png");
+        console.log(dataUrl)
         const link = document.createElement("a");
         const currentDateTime = new Date().toISOString().replace(/[-:.]/g, "");
         const randomImageName = `${currentDateTime}-${
@@ -114,17 +114,15 @@ export default function DrawingBoard() {
     }
 
     const data = { coloredDivs, email: session?.user?.email };
-    console.log(data);
+    setArtSubmitting(true);
     axios
       .post("/api/createArt", data)
       .then((response) => {
-        console.log(response);
         setSelectedDivs([]);
         setArtExistsMsg("");
         setArtSubmitting(false);
       })
       .catch((error) => {
-        console.log(error.message);
         if (error.response.status === 400) {
           setArtExistsMsg("Art already exists");
           setArtSubmitting(false);
