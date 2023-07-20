@@ -4,6 +4,7 @@ import ColorSelection from "./ColorSelection";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import { useSession } from "next-auth/react";
+import ButtonLoader from "./ButtonLoader";
 
 interface DivColor {
   row: number;
@@ -12,6 +13,7 @@ interface DivColor {
 }
 
 export default function DrawingBoard() {
+  const [artSubmitting, setArtSubmitting] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
   const gridSize: number = 64;
@@ -79,6 +81,7 @@ export default function DrawingBoard() {
   }, [selectedDivs]);
 
   const handleFinishClick = async () => {
+    setArtSubmitting(true);
     const coloredDivs = selectedDivs
       .filter((div) => div.color)
       .map((div) => ({
@@ -116,11 +119,13 @@ export default function DrawingBoard() {
         console.log(response);
         setSelectedDivs([]);
         setArtExistsMsg("");
+        setArtSubmitting(false);
       })
       .catch((error) => {
         console.log(error.message);
         if (error.response.status === 400) {
           setArtExistsMsg("Art already exists");
+          setArtSubmitting(false);
         }
       });
   };
@@ -173,7 +178,9 @@ export default function DrawingBoard() {
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={handleFinishClick}
       >
-        Finish
+        {artSubmitting ? (
+          <ButtonLoader />
+        ) : "Finish"}
       </button>
       <div className="text-red-500">{artExistsMsg}</div>
     </div>
