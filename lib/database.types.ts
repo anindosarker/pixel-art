@@ -12,6 +12,7 @@ export interface Database {
       arts: {
         Row: {
           art_array: Json[]
+          avg_rating: number | null
           created_at: string | null
           id: number
           image_url: string | null
@@ -19,6 +20,7 @@ export interface Database {
         }
         Insert: {
           art_array: Json[]
+          avg_rating?: number | null
           created_at?: string | null
           id?: number
           image_url?: string | null
@@ -26,6 +28,7 @@ export interface Database {
         }
         Update: {
           art_array?: Json[]
+          avg_rating?: number | null
           created_at?: string | null
           id?: number
           image_url?: string | null
@@ -74,7 +77,7 @@ export interface Database {
           created_at: string | null
           description: string | null
           id: number
-          review: number
+          rating: number
           user_id: string | null
         }
         Insert: {
@@ -82,7 +85,7 @@ export interface Database {
           created_at?: string | null
           description?: string | null
           id?: number
-          review?: number
+          rating?: number
           user_id?: string | null
         }
         Update: {
@@ -90,7 +93,7 @@ export interface Database {
           created_at?: string | null
           description?: string | null
           id?: number
-          review?: number
+          rating?: number
           user_id?: string | null
         }
         Relationships: [
@@ -113,7 +116,12 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      average_rating: {
+        Args: {
+          art_id: number
+        }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
