@@ -5,6 +5,9 @@ import html2canvas from "html2canvas";
 import ButtonLoader from "./ButtonLoader";
 import { useRouter } from "next/navigation";
 import { Database } from "@/lib/database.types";
+import { toast } from "react-hot-toast";
+import { v4 } from "uuid";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface DivColor {
   row: number;
@@ -21,6 +24,8 @@ export default function DrawingBoard() {
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
+
+  const supabase = createClientComponentClient<Database>();
 
   const handleDivClick = (row: number, col: number) => {
     const existingDiv = selectedDivs.find(
@@ -95,43 +100,59 @@ export default function DrawingBoard() {
     console.log(coloredDivs);
 
     const board = document.getElementById("drawing-board");
+    let imageFile;
     if (board) {
       html2canvas(board).then((canvas) => {
-        const dataUrl = canvas.toDataURL("image/png");
-        const link = document.createElement("a");
-        const currentDateTime = new Date().toISOString().replace(/[-:.]/g, "");
-        const randomImageName = `${currentDateTime}-${
-          Math.random().toString(36).substring(2, 15) +
-          Math.random().toString(36).substring(2, 15)
-        }.png`;
-        link.download = randomImageName;
-        link.href = dataUrl;
-        // link.click();
+        imageFile = canvas.toDataURL("image/png");
       });
     }
 
+    const url = await handleUpload(imageFile!);
+
     const data = {
       art_array: coloredDivs,
+      image_url: url,
     };
     console.log(
       "👉️ ~ file: DrawingBoard.tsx:118 ~ handleFinishClick ~ data:\n",
       data
     );
 
-    // setArtSubmitting(true);
-    // const response = await fetch("/api/arts", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // }).then((res) => res.json());
+    setArtSubmitting(true);
+    const response = await fetch("/api/arts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
 
-    // console.log(
-    //   "👉️ ~ file: DrawingBoard.tsx:129 ~ handleFinishClick ~ response:\n",
-    //   response
-    // );
+    console.log(
+      "👉️ ~ file: DrawingBoard.tsx:129 ~ handleFinishClick ~ response:\n",
+      response
+    );
   };
+
+  async function handleUpload(image: File) {
+    let notification = toast.loading("Uploading Product...");
+    const file = image;
+    const fileName = `${v4()}.${image?.name.split(".").pop()}`;
+    const filePath = `${fileName}`;
+
+    const { data: imageUploadData, error: imageUploadError } =
+      await supabase.storage.from("images").upload(filePath, file!);
+
+    if (imageUploadError) {
+      console.log(
+        "🚀 ~ file: NewCreation.tsx:59 ~ handleFileUpload ~ imageUploadError:\n",
+        imageUploadError
+      );
+      toast.error("Image Upload error!", { id: notification });
+    }
+    const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${imageUploadData?.path}`;
+    toast.success("Product Uploaded!", { id: notification });
+    return url;
+  }
 
   const renderGrid = () => {
     const grid = [];
