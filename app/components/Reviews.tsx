@@ -1,3 +1,4 @@
+"use client";
 import { Database } from "@/lib/database.types";
 import Image from "next/image";
 import React from "react";
