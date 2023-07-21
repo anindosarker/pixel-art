@@ -17,7 +17,7 @@ export async function GET() {
     return NextResponse.json(error, { status: 500 });
   }
 
-  return NextResponse.json({ data, user });
+  return NextResponse.json(data);
 }
 
 export async function POST(req: NextRequest) {

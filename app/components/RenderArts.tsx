@@ -3,35 +3,42 @@ import React, { useCallback, useEffect, useState } from "react";
 import ArtComponent from "./ArtComponent";
 import axios from "axios";
 import { Ring } from "@uiball/loaders";
+import Reviews from "./Reviews";
+import { Database } from "@/lib/database.types";
 
 export default function RenderArts() {
-  const [arts, setArts] = useState([]);
+  const [arts, setArts] = useState<
+    Database["public"]["Tables"]["arts"]["Row"] | null
+  >(null);
   const [loading, setLoading] = useState(false);
 
-  const getAllArts = useCallback(async () => {
+  useEffect(() => {
+    getAllArts2();
+  }, []);
+
+  async function getAllArts2() {
     setLoading(true);
-    const response = await axios.get("/api/art");
+    const response = await fetch("/api/arts").then((res) => res.json());
+    console.log(
+      "👉️ ~ file: RenderArts.tsx:30 ~ getAllArts2 ~ response:\n",
+      response
+    );
 
     setArts(response.data);
     setLoading(false);
-  }, [setArts]);
-
-  useEffect(() => {
-    getAllArts();
-  }, [getAllArts]);
+  }
 
   if (loading) {
-    return <div className="flex items-center justify-center">
-    <Ring color="#fff" />
-    </div>;
-
+    return (
+      <div className="flex items-center justify-center">
+        <Ring color="#fff" />
+      </div>
+    );
   }
 
   return (
     <div className="">
-      {arts.map((art, idx) => (
-        <ArtComponent key={idx} userArt={art} />
-      ))}
+      <Reviews data={arts} />
     </div>
   );
 }

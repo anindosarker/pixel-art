@@ -1,63 +1,28 @@
-"use client";
-import React from "react";
+import { Database } from "@/lib/database.types";
 import Image from "next/image";
-import artImg from "../../public/images/art (3).png";
-import axios from "axios";
-
-interface ArtComponentProps {
-  userArt: any;
-}
-
-export default function ArtComponent({ userArt }: ArtComponentProps) {
-  // const grid = [];
-
-  // for (let i = 0; i < 64; i++) {
-  //   const row: any = [];
-  //   for (let j = 0; j < 64; j++) {
-  //     // row.push(
-  //     //   <div
-  //     //     key={`${i}-${j}`}
-  //     //     className="w-2 h-2 bg-black border border-white"
-  //     //   ></div>
-  //     // );
-  //     const cellColor = userArt.userArt.find(
-  //       (cell: any) => cell.row === i && cell.col === j
-  //     )?.color;
-  //     row.push(
-  //       <div
-  //         key={`${i}-${j}`}
-  //         className="w-1 h-1 border-white"
-  //         style={{ backgroundColor: cellColor }}
-  //       ></div>
-  //     );
-  //   }
-
-  //   grid.push(
-  //     <div key={i} className="flex">
-  //       {row}
-  //     </div>
-  //   );
-  // }
-
+import React from "react";
+export default function Reviews({
+  data,
+}: {
+  data: Database["public"]["Tables"]["arts"]["Row"] | null;
+}) {
   return (
     <article className="rounded-xl bg-black border border-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 mb-5">
       <div className="flex items-start sm:gap-8">
         <div className="">
           <Image
-            src={userArt.image_url}
-            alt=""
+            src={data?.image_url || "/images/art (3).png"}
+            alt={data?.user_id || "username"}
             width={300}
             height={300}
             className="object-cover rounded-md"
           />
-          {/* {grid} */}
         </div>
 
         <div>
           <h3 className="mt-4 text-lg font-medium sm:text-xl">
             <a href="" className="hover:underline">
-              {" "}
-              Username
+              {data?.user_id}
             </a>
           </h3>
 
@@ -84,7 +49,7 @@ export default function ArtComponent({ userArt }: ArtComponentProps) {
                 ></path>
               </svg>
 
-              <p className="text-sm font-medium">{userArt.created_at}</p>
+              <p className="text-sm font-medium">{data?.created_at}</p>
             </div>
           </div>
         </div>
