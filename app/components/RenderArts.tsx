@@ -1,7 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
-import ArtComponent from "./ArtComponent";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { Ring } from "@uiball/loaders";
 import Reviews from "./Reviews";
 import { Database } from "@/lib/database.types";
@@ -13,10 +11,10 @@ export default function RenderArts() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getAllArts2();
+    getAllArts();
   }, []);
 
-  async function getAllArts2() {
+  async function getAllArts() {
     setLoading(true);
     const response = await fetch("/api/arts").then((res) => res.json());
     console.log(

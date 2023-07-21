@@ -1,11 +1,10 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import ColorSelection from "./ColorSelection";
-import axios from "axios";
 import html2canvas from "html2canvas";
-import { useSession } from "next-auth/react";
 import ButtonLoader from "./ButtonLoader";
 import { useRouter } from "next/navigation";
+import { Database } from "@/lib/database.types";
 
 interface DivColor {
   row: number;
@@ -22,7 +21,6 @@ export default function DrawingBoard() {
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
-  const { data: session } = useSession();
 
   const handleDivClick = (row: number, col: number) => {
     const existingDiv = selectedDivs.find(
@@ -100,7 +98,6 @@ export default function DrawingBoard() {
     if (board) {
       html2canvas(board).then((canvas) => {
         const dataUrl = canvas.toDataURL("image/png");
-        console.log(dataUrl)
         const link = document.createElement("a");
         const currentDateTime = new Date().toISOString().replace(/[-:.]/g, "");
         const randomImageName = `${currentDateTime}-${
@@ -113,21 +110,27 @@ export default function DrawingBoard() {
       });
     }
 
-    const data = { coloredDivs, email: session?.user?.email };
-    setArtSubmitting(true);
-    axios
-      .post("/api/createArt", data)
-      .then((response) => {
-        setSelectedDivs([]);
-        setArtExistsMsg("");
-        setArtSubmitting(false);
-      })
-      .catch((error) => {
-        if (error.response.status === 400) {
-          setArtExistsMsg("Art already exists");
-          setArtSubmitting(false);
-        }
-      });
+    const data = {
+      art_array: coloredDivs,
+    };
+    console.log(
+      "👉️ ~ file: DrawingBoard.tsx:118 ~ handleFinishClick ~ data:\n",
+      data
+    );
+
+    // setArtSubmitting(true);
+    // const response = await fetch("/api/arts", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // }).then((res) => res.json());
+
+    // console.log(
+    //   "👉️ ~ file: DrawingBoard.tsx:129 ~ handleFinishClick ~ response:\n",
+    //   response
+    // );
   };
 
   const renderGrid = () => {
@@ -167,8 +170,8 @@ export default function DrawingBoard() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-row items-center">
+    <div className="flex flex-col items-center justify-between">
+      <div className="flex w-full justify-center gap-x-12">
         <ColorSelection setSelectedColor={setSelectedColor} />
         <div className="" id="drawing-board">
           {renderGrid()}
