@@ -1,7 +1,6 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import ColorSelection from "./ColorSelection";
-import html2canvas from "html2canvas";
 import ButtonLoader from "./ButtonLoader";
 import { useRouter } from "next/navigation";
 import { Database } from "@/lib/database.types";
@@ -27,6 +26,7 @@ export default function DrawingBoard() {
   const previousDiv = useRef<DivColor | null>(null);
 
   const supabase = createClientComponentClient<Database>();
+  let notification: string;
 
   const handleDivClick = (row: number, col: number) => {
     const existingDiv = selectedDivs.find(
@@ -100,7 +100,6 @@ export default function DrawingBoard() {
 
     console.log(coloredDivs);
 
-
     let node = document.getElementById("drawing-board");
     let imageFile;
     let url: string;
@@ -127,14 +126,23 @@ export default function DrawingBoard() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-        }).then((res) => res.json());
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.log(
+              "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
+              err
+            );
+            toast.error("Error saving art!", { id: notification });
+          });
+        toast.success("Product Uploaded!", { id: notification });
         setArtSubmitting(false);
         router.refresh();
       });
   };
 
   async function handleUpload(image: File) {
-    let notification = toast.loading("Uploading Product...");
+    notification = toast.loading("Uploading Art...");
     const file = image;
     const fileName = `${v4()}.png`;
     const filePath = `${fileName}`;
@@ -150,7 +158,7 @@ export default function DrawingBoard() {
       toast.error("Image Upload error!", { id: notification });
     }
     const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${imageUploadData?.path}`;
-    toast.success("Product Uploaded!", { id: notification });
+
     return url;
   }
 
