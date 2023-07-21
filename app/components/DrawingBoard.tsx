@@ -100,49 +100,43 @@ export default function DrawingBoard() {
 
     console.log(coloredDivs);
 
-    const board = document.getElementById("drawing-board");
 
-    if (board) {
-      html2canvas(board).then((canvas) => {
-        //make a file from the canvas and add it to imageFile variable. Make it a png file
-        let imageFile = canvas.toDataURL("image/png");
+    let node = document.getElementById("drawing-board");
+    let imageFile;
+    let url: string;
+    domtoimage
+      //@ts-ignore
+      .toBlob(node)
+      .then(async function (blob) {
+        // use this blob file and make it a png image
+        imageFile = new File([blob], "image.png", { type: "image/png" });
+        url = await handleUpload(imageFile);
+      })
+      .then(async () => {
+        // TODO: upload image to supabase storage, and add new Art to supabase database
+
+        const data = {
+          art_array: coloredDivs,
+          image_url: url,
+        };
+
+        setArtSubmitting(true);
+        const response = await fetch("/api/arts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }).then((res) => res.json());
+        setArtSubmitting(false);
+        router.refresh();
       });
-    }
-
-
-    // TODO: upload image to supabase storage, and add new Art to supabase database
-    // const url = await handleUpload(imageFile);
-
-    // const data = {
-    //   art_array: coloredDivs,
-    //   image_url: url,
-    // };
-    // console.log(
-    //   "👉️ ~ file: DrawingBoard.tsx:118 ~ handleFinishClick ~ data:\n",
-    //   data
-    // );
-
-    // setArtSubmitting(true);
-    // const response = await fetch("/api/arts", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // }).then((res) => res.json());
-
-    // console.log(
-    //   "👉️ ~ file: DrawingBoard.tsx:129 ~ handleFinishClick ~ response:\n",
-    //   response
-    // );
-
-    // router.refresh();
   };
 
   async function handleUpload(image: File) {
     let notification = toast.loading("Uploading Product...");
     const file = image;
-    const fileName = `${v4()}.${image?.name.split(".").pop()}`;
+    const fileName = `${v4()}.png`;
     const filePath = `${fileName}`;
 
     const { data: imageUploadData, error: imageUploadError } =
