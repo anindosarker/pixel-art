@@ -8,6 +8,7 @@ import { Database } from "@/lib/database.types";
 import { toast } from "react-hot-toast";
 import { v4 } from "uuid";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import domtoimage from "dom-to-image";
 
 interface DivColor {
   row: number;
@@ -100,37 +101,42 @@ export default function DrawingBoard() {
     console.log(coloredDivs);
 
     const board = document.getElementById("drawing-board");
-    let imageFile;
+
     if (board) {
       html2canvas(board).then((canvas) => {
-        imageFile = canvas.toDataURL("image/png");
+        //make a file from the canvas and add it to imageFile variable. Make it a png file
+        let imageFile = canvas.toDataURL("image/png");
       });
     }
 
-    const url = await handleUpload(imageFile!);
 
-    const data = {
-      art_array: coloredDivs,
-      image_url: url,
-    };
-    console.log(
-      "👉️ ~ file: DrawingBoard.tsx:118 ~ handleFinishClick ~ data:\n",
-      data
-    );
+    // TODO: upload image to supabase storage, and add new Art to supabase database
+    // const url = await handleUpload(imageFile);
 
-    setArtSubmitting(true);
-    const response = await fetch("/api/arts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((res) => res.json());
+    // const data = {
+    //   art_array: coloredDivs,
+    //   image_url: url,
+    // };
+    // console.log(
+    //   "👉️ ~ file: DrawingBoard.tsx:118 ~ handleFinishClick ~ data:\n",
+    //   data
+    // );
 
-    console.log(
-      "👉️ ~ file: DrawingBoard.tsx:129 ~ handleFinishClick ~ response:\n",
-      response
-    );
+    // setArtSubmitting(true);
+    // const response = await fetch("/api/arts", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // }).then((res) => res.json());
+
+    // console.log(
+    //   "👉️ ~ file: DrawingBoard.tsx:129 ~ handleFinishClick ~ response:\n",
+    //   response
+    // );
+
+    // router.refresh();
   };
 
   async function handleUpload(image: File) {

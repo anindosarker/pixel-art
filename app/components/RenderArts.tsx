@@ -6,9 +6,10 @@ import { Database } from "@/lib/database.types";
 
 export default function RenderArts() {
   const [arts, setArts] = useState<
-    Database["public"]["Tables"]["arts"]["Row"] | null
-  >(null);
+    Database["public"]["Tables"]["arts"]["Row"][]
+  >([]);
   const [loading, setLoading] = useState(false);
+  console.log("👉️ ~ file: RenderArts.tsx:9 ~ RenderArts ~ arts:\n", arts);
 
   useEffect(() => {
     getAllArts();
@@ -22,7 +23,7 @@ export default function RenderArts() {
       response
     );
 
-    setArts(response.data);
+    setArts(response);
     setLoading(false);
   }
 
@@ -36,7 +37,10 @@ export default function RenderArts() {
 
   return (
     <div className="">
-      <Reviews data={arts} />
+      {arts &&
+        arts.map((art) => {
+          return <Reviews key={art.id} data={art} />;
+        })}
     </div>
   );
 }
