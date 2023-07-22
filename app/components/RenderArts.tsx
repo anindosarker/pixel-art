@@ -1,7 +1,8 @@
 "use client";
 import { Database } from "@/lib/database.types";
+import autoAnimate from "@formkit/auto-animate";
 import { Ring } from "@uiball/loaders";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Reviews from "./Reviews";
 
 export default function RenderArts() {
@@ -9,10 +10,12 @@ export default function RenderArts() {
     Database["public"]["Tables"]["arts"]["Row"][]
   >([]);
   const [loading, setLoading] = useState(false);
+  const parent = useRef(null);
 
   useEffect(() => {
+    parent.current && autoAnimate(parent.current);
     getAllArts();
-  }, []);
+  }, [parent]);
 
   async function getAllArts() {
     setLoading(true);
@@ -24,14 +27,14 @@ export default function RenderArts() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center" ref={parent}>
         <Ring color="#fff" />
       </div>
     );
   }
 
   return (
-    <div className="">
+    <div className="" ref={parent}>
       {arts &&
         arts.map((art) => {
           return <Reviews key={art.id} data={art} />;

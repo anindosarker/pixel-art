@@ -20,7 +20,7 @@ export default function DrawingBoard() {
   const [artSubmitting, setArtSubmitting] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
-  const gridSize: number = 64;
+  const gridSize: number = 32;
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
