@@ -8,11 +8,6 @@ const supabase = createServerComponentClient<Database>({ cookies });
 export async function GET() {
   let { data, error } = await supabase.from("arts").select(`*, user_id(*)`);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  console.log("👉️ ~ file: route.ts:13 ~ GET ~ user:\n", user);
   if (error) {
     return NextResponse.json(error, { status: 500 });
   }
