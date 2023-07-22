@@ -1,12 +1,12 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { Database } from "@/lib/database.types";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 const supabase = createServerComponentClient<Database>({ cookies });
 
 export async function GET() {
-  let { data, error } = await supabase.from("arts").select("*");
+  let { data, error } = await supabase.from("arts").select(`*, user_id(*)`);
 
   const {
     data: { user },

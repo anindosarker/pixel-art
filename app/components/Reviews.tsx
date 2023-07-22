@@ -1,11 +1,41 @@
+"use client";
 import { Database } from "@/lib/database.types";
+import { Rating } from "@smastrom/react-rating";
+import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+
+import "@smastrom/react-rating/style.css";
+import axios from "axios";
+import toast from "react-hot-toast";
+
 export default function Reviews({
   data,
 }: {
   data: Database["public"]["Tables"]["arts"]["Row"] | null;
 }) {
+  console.log(data);
+  const [state, setState] = useState({
+    rating: Math.floor(data?.avg_rating as number) || 0,
+  });
+
+  const handleRating = async (selectedValue: number) => {
+    setState((prev) => ({
+      ...prev,
+      rating: selectedValue,
+    }));
+    console.log(selectedValue);
+    const body = {
+      rating: selectedValue,
+      art_id: data?.id,
+      description: "",
+    };
+    const response = await axios
+      .post("/api/review", body)
+      .then((res) => toast.success("Review added!"))
+      .catch((err) => toast.error("Error adding review!"));
+  };
+
   return (
     <article className="rounded-xl bg-black border border-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 mb-5">
       <div className="flex items-start sm:gap-8">
@@ -20,18 +50,22 @@ export default function Reviews({
         </div>
 
         <div>
-          <h3 className="mt-4 text-lg font-medium sm:text-xl">
+          <h6 className="text-xs">
             <a href="" className="hover:underline">
-              {data?.user_id}
+              {data?.user_id?.email || "anducharkhar@gmail.com"}
             </a>
-          </h3>
+          </h6>
 
-          <p className="mt-1 text-sm text-white">
-            review section Lorem ipsum, dolor sit amet consectetur adipisicing
-            elit. Minima quasi exercitationem magnam velit ut ipsa suscipit
-            repellat amet in beatae!
-          </p>
-
+          <div className="text-sm font-semibold">
+            Rating: {data?.avg_rating}/5
+          </div>
+          <div className="">
+            <Rating
+              style={{ maxWidth: 250 }}
+              value={state.rating}
+              onChange={handleRating}
+            />
+          </div>
           <div className="mt-4 sm:flex sm:items-center sm:gap-2">
             <div className="flex items-center gap-1 text-gray-500">
               <svg
@@ -49,7 +83,13 @@ export default function Reviews({
                 ></path>
               </svg>
 
-              <p className="text-sm font-medium">{data?.created_at}</p>
+              <p className="text-sm font-medium">
+                {/* {format(new Date(data?.created_at || Date.now()), "PP")} */}
+                {formatDistanceToNow(
+                  new Date(data?.created_at || Date.now())
+                )}{" "}
+                ago
+              </p>
             </div>
           </div>
         </div>

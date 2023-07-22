@@ -1,13 +1,13 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import ColorSelection from "./ColorSelection";
-import ButtonLoader from "./ButtonLoader";
-import { useRouter } from "next/navigation";
 import { Database } from "@/lib/database.types";
-import { toast } from "react-hot-toast";
-import { v4 } from "uuid";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import domtoimage from "dom-to-image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
+import { v4 } from "uuid";
+import ButtonLoader from "./ButtonLoader";
+import ColorSelection from "./ColorSelection";
 
 interface DivColor {
   row: number;
@@ -29,6 +29,9 @@ export default function DrawingBoard() {
   let notification: string;
 
   const handleDivClick = (row: number, col: number) => {
+    if (!selectedColor) {
+      toast.error("Please select a color!", { id: notification });
+    }
     const existingDiv = selectedDivs.find(
       (div) => div.row === row && div.col === col
     );
@@ -137,6 +140,7 @@ export default function DrawingBoard() {
           });
         toast.success("Product Uploaded!", { id: notification });
         setArtSubmitting(false);
+        setSelectedDivs([]);
         router.refresh();
       });
   };

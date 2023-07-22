@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Ring } from "@uiball/loaders";
-import Reviews from "./Reviews";
 import { Database } from "@/lib/database.types";
+import { Ring } from "@uiball/loaders";
+import { useEffect, useState } from "react";
+import Reviews from "./Reviews";
 
 export default function RenderArts() {
   const [arts, setArts] = useState<
