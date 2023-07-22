@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase
     .from("reviews")
-    .insert(reviewData)
+    .upsert(reviewData)
     .select();
   if (error) {
     return NextResponse.json(error, { status: 500 });

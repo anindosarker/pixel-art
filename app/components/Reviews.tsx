@@ -12,7 +12,18 @@ import toast from "react-hot-toast";
 export default function Reviews({
   data,
 }: {
-  data: Database["public"]["Tables"]["arts"]["Row"] | null;
+  data:
+    | {
+        art_array: JSON[];
+        avg_rating: number | null;
+        created_at: string | null;
+        id: number;
+        image_url: string | null;
+        user_id: {
+          email: string | null;
+        };
+      }
+    | null;
 }) {
   console.log(data);
   const [state, setState] = useState({
@@ -42,7 +53,7 @@ export default function Reviews({
         <div className="">
           <Image
             src={data?.image_url || "/images/art (3).png"}
-            alt={data?.user_id || "username"}
+            alt="art"
             width={300}
             height={300}
             className="object-cover rounded-md"
@@ -54,6 +65,7 @@ export default function Reviews({
             <a href="" className="hover:underline">
               {data?.user_id?.email || "anducharkhar@gmail.com"}
             </a>
+            <p>{data?.id}</p>
           </h6>
 
           <div className="text-sm font-semibold">

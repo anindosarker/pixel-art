@@ -7,7 +7,16 @@ import Reviews from "./Reviews";
 
 export default function RenderArts() {
   const [arts, setArts] = useState<
-    Database["public"]["Tables"]["arts"]["Row"][]
+    {
+      art_array: JSON[];
+      avg_rating: number | null;
+      created_at: string | null;
+      id: number;
+      image_url: string | null;
+      user_id: {
+        email: string | null;
+      };
+    }[]
   >([]);
   const [loading, setLoading] = useState(false);
   const parent = useRef(null);
