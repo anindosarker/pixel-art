@@ -1,61 +1,65 @@
 "use client";
-import { Database } from "@/lib/database.types";
+import React, { useEffect, useRef, useState } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import { Ring } from "@uiball/loaders";
-import { useEffect, useRef, useState } from "react";
 import Reviews from "./Reviews";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import ServerRenderArts from "./ServerRenderArts";
+import ServerArtsByRating from "./ServerArtsByRating";
 
-export default function RenderArts() {
-  const [arts, setArts] = useState<
-    {
-      art_array: JSON[];
-      avg_rating: number | null;
-      created_at: string | null;
-      id: number;
-      image_url: string | null;
-      user_id: {
-        email: string | null;
-      };
-    }[]
-  >([]);
+const RenderArts = () => {
+  const [options] = useState(["Time Uploaded", "Rating"]);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [arts, setArts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const parent = useRef(null);
+  const parentRef = useRef(null);
 
   useEffect(() => {
-    const getAllArts = async () => {
+    const fetchArts = async () => {
       setLoading(true);
-      const response = await fetch("/api/arts").then((res) => res.json());
-
+      const filter = selectedTab === 1 ? "rating" : null;
+      const response = await fetch(
+        `/api/arts${filter ? `?filter=${filter}` : ""}`
+      ).then((res) => res.json());
       setArts(response);
       setLoading(false);
     };
-
-    parent.current && autoAnimate(parent.current);
-    getAllArts();
-  }, [parent]);
-
-  // async function getAllArts() {
-  //   setLoading(true);
-  //   const response = await fetch("/api/arts").then((res) => res.json());
-
-  //   setArts(response);
-  //   setLoading(false);
-  // }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center" ref={parent}>
-        <Ring color="#fff" />
-      </div>
-    );
-  }
+    parentRef.current && autoAnimate(parentRef.current);
+    fetchArts();
+  }, [selectedTab]);
 
   return (
-    <div className="" ref={parent}>
-      {arts &&
-        arts.map((art) => {
-          return <Reviews key={art.id} data={art} />;
-        })}
+    <div className="flex flex-col gap-8" ref={parentRef}>
+      {loading && (
+        <div className="flex items-center justify-center">
+          <Ring color="#fff" />
+        </div>
+      )}
+      <div>
+        <Tabs>
+          <TabList>
+            {options.map((option, index) => (
+              <Tab key={index} onClick={() => setSelectedTab(index)}>
+                Sorted by {option}
+              </Tab>
+            ))}
+          </TabList>
+          {options.map((option, index) => (
+            <TabPanel key={index}>
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <Ring color="#fff" />
+                </div>
+              ) : (
+                arts && arts.map((art) => <Reviews key={index} data={art} />)
+              )}
+            </TabPanel>
+          ))}
+        </Tabs>
+      </div>
     </div>
   );
-}
+};
+
+export default RenderArts;

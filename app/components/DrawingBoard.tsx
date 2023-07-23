@@ -189,7 +189,7 @@ export default function DrawingBoard() {
               margin: 0,
               padding: 0,
             }}
-            className=""
+            className="rounded-sm"
           />
         );
       }
@@ -214,7 +214,7 @@ export default function DrawingBoard() {
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={handleFinishClick}
       >
-        {artSubmitting ? <ButtonLoader /> : "Finish"}
+        Upload
       </button>
       <div className="text-red-500">{artExistsMsg}</div>
     </div>

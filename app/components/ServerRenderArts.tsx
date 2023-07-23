@@ -5,7 +5,6 @@ import Reviews from "./Reviews";
 export default async function ServerRenderArts() {
   const arts = await getArts();
   
-
   return (
     <div>
       {Array.isArray(arts) &&
