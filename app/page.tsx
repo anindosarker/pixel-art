@@ -5,6 +5,7 @@ import RenderArts from "./components/RenderArts";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
 import { cookies } from "next/headers";
+import ServerRenderArts from "./components/ServerRenderArts";
 
 export default async function Home() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -22,7 +23,7 @@ export default async function Home() {
           </div>
           <Canvas />
           <div className="flex flex-col gap-4 w-1/2">
-            <RenderArts />
+            <ServerRenderArts/>
           </div>
         </div>
       </>

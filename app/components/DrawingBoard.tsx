@@ -141,7 +141,7 @@ export default function DrawingBoard() {
         toast.success("Product Uploaded!", { id: notification });
         setArtSubmitting(false);
         setSelectedDivs([]);
-        router.refresh();
+        router.replace("/");
       });
   };
 
@@ -184,7 +184,7 @@ export default function DrawingBoard() {
               backgroundColor,
               width: "10px",
               height: "10px",
-              border: "1px solid white",
+              border: "1px solid gray",
               display: "inline-block",
               margin: 0,
               padding: 0,

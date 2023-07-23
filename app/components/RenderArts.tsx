@@ -22,17 +22,25 @@ export default function RenderArts() {
   const parent = useRef(null);
 
   useEffect(() => {
+    const getAllArts = async () => {
+      setLoading(true);
+      const response = await fetch("/api/arts").then((res) => res.json());
+
+      setArts(response);
+      setLoading(false);
+    };
+
     parent.current && autoAnimate(parent.current);
     getAllArts();
   }, [parent]);
 
-  async function getAllArts() {
-    setLoading(true);
-    const response = await fetch("/api/arts").then((res) => res.json());
+  // async function getAllArts() {
+  //   setLoading(true);
+  //   const response = await fetch("/api/arts").then((res) => res.json());
 
-    setArts(response);
-    setLoading(false);
-  }
+  //   setArts(response);
+  //   setLoading(false);
+  // }
 
   if (loading) {
     return (
