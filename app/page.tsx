@@ -24,6 +24,7 @@ export default async function Home() {
           <Canvas />
           <div className="flex flex-col gap-4 w-1/2">
             <ServerRenderArts/>
+            {/* <RenderArts/> */}
           </div>
         </div>
       </>

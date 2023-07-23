@@ -182,8 +182,8 @@ export default function DrawingBoard() {
             onClick={() => handleDivClick(i, j)}
             style={{
               backgroundColor,
-              width: "10px",
-              height: "10px",
+              width: "20px",
+              height: "20px",
               border: "1px solid gray",
               display: "inline-block",
               margin: 0,

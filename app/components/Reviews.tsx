@@ -4,10 +4,10 @@ import { Rating } from "@smastrom/react-rating";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import React, { useState } from "react";
-
 import "@smastrom/react-rating/style.css";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Reviews({
   data,
@@ -23,8 +23,9 @@ export default function Reviews({
           email: string | null;
         };
       }
-    | null;
+    | any;
 }) {
+  const router = useRouter();
   console.log(data);
   const [state, setState] = useState({
     rating: Math.floor(data?.avg_rating as number) || 0,
@@ -43,7 +44,10 @@ export default function Reviews({
     };
     const response = await axios
       .post("/api/review", body)
-      .then((res) => toast.success("Review added!"))
+      .then((res) => {
+        toast.success("Review added!")
+        router.refresh();
+      })
       .catch((err) => toast.error("Error adding review!"));
   };
 

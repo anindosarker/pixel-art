@@ -1,14 +1,15 @@
-import React from 'react'
-import { getArts } from '../actions/getArts'
-import Reviews from './Reviews';
+import React from "react";
+import { getArts } from "../actions/getArts";
+import Reviews from "./Reviews";
 
 export default async function ServerRenderArts() {
-    const arts = await getArts();
-    // console.log(arts);
+  const arts = await getArts();
+  
+
   return (
     <div>
-      {arts &&
-        arts.map((art:any) => {
+      {Array.isArray(arts) &&
+        arts.map((art: any) => {
           return <Reviews key={art.id} data={art} />;
         })}
     </div>
