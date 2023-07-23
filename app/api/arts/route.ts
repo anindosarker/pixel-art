@@ -5,14 +5,33 @@ import { NextRequest, NextResponse } from "next/server";
 
 const supabase = createServerComponentClient<Database>({ cookies });
 
-export async function GET() {
-  let { data, error } = await supabase.from("arts").select(`*, user_id(*)`);
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const filter = searchParams.get("filter");
 
-  if (error) {
-    return NextResponse.json(error, { status: 500 });
+  if (filter === "rating") {
+    let { data, error } = await supabase
+      .from("arts")
+      .select(`*, user_id(*)`)
+      .order("avg_rating", { ascending: false });
+
+    if (error) {
+      return NextResponse.error();
+    }
+
+    return NextResponse.json(data);
+  } else {
+    let { data, error } = await supabase
+      .from("arts")
+      .select(`*, user_id(*)`)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      return NextResponse.json(error, { status: 500 });
+    }
+
+    return NextResponse.json(data);
   }
-
-  return NextResponse.json(data);
 }
 
 export async function POST(req: NextRequest) {
