@@ -1,23 +1,37 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { Database } from "@/lib/database.types";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 const supabase = createServerComponentClient<Database>({ cookies });
 
-export async function GET() {
-  let { data, error } = await supabase.from("arts").select("*");
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const filter = searchParams.get("filter");
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  if (filter === "rating") {
+    let { data, error } = await supabase
+      .from("arts")
+      .select(`*, user_id(*)`)
+      .order("avg_rating", { ascending: false });
 
-  console.log("👉️ ~ file: route.ts:13 ~ GET ~ user:\n", user);
-  if (error) {
-    return NextResponse.json(error, { status: 500 });
+    if (error) {
+      return NextResponse.error();
+    }
+
+    return NextResponse.json(data);
+  } else {
+    let { data, error } = await supabase
+      .from("arts")
+      .select(`*, user_id(*)`)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      return NextResponse.json(error, { status: 500 });
+    }
+
+    return NextResponse.json(data);
   }
-
-  return NextResponse.json(data);
 }
 
 export async function POST(req: NextRequest) {

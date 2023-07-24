@@ -1,13 +1,13 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import ColorSelection from "./ColorSelection";
-import ButtonLoader from "./ButtonLoader";
-import { useRouter } from "next/navigation";
 import { Database } from "@/lib/database.types";
-import { toast } from "react-hot-toast";
-import { v4 } from "uuid";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import domtoimage from "dom-to-image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
+import { v4 } from "uuid";
+import ButtonLoader from "./ButtonLoader";
+import ColorSelection from "./ColorSelection";
 
 interface DivColor {
   row: number;
@@ -20,7 +20,7 @@ export default function DrawingBoard() {
   const [artSubmitting, setArtSubmitting] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
-  const gridSize: number = 64;
+  const gridSize: number = 32;
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
@@ -29,6 +29,9 @@ export default function DrawingBoard() {
   let notification: string;
 
   const handleDivClick = (row: number, col: number) => {
+    if (!selectedColor) {
+      toast.error("Please select a color!", { id: notification });
+    }
     const existingDiv = selectedDivs.find(
       (div) => div.row === row && div.col === col
     );
@@ -137,7 +140,8 @@ export default function DrawingBoard() {
           });
         toast.success("Product Uploaded!", { id: notification });
         setArtSubmitting(false);
-        router.refresh();
+        setSelectedDivs([]);
+        router.replace("/");
       });
   };
 
@@ -178,14 +182,14 @@ export default function DrawingBoard() {
             onClick={() => handleDivClick(i, j)}
             style={{
               backgroundColor,
-              width: "10px",
-              height: "10px",
-              border: "1px solid white",
+              width: "20px",
+              height: "20px",
+              border: "1px solid gray",
               display: "inline-block",
               margin: 0,
               padding: 0,
             }}
-            className=""
+            className="rounded-sm"
           />
         );
       }
@@ -210,7 +214,7 @@ export default function DrawingBoard() {
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={handleFinishClick}
       >
-        {artSubmitting ? <ButtonLoader /> : "Finish"}
+        Upload
       </button>
       <div className="text-red-500">{artExistsMsg}</div>
     </div>

@@ -1,7 +1,7 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { Database } from "@/lib/database.types";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 const supabase = createServerComponentClient<Database>({ cookies });
 
@@ -22,14 +22,14 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-
+  console.log("rating", body)
   let reviewData: Database["public"]["Tables"]["reviews"]["Insert"] = {
     ...body,
   };
 
   const { data, error } = await supabase
     .from("reviews")
-    .insert(reviewData)
+    .upsert(reviewData)
     .select();
   if (error) {
     return NextResponse.json(error, { status: 500 });
