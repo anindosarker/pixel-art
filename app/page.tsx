@@ -6,6 +6,10 @@ import { cookies } from "next/headers";
 import ServerRenderArts from "./components/ServerRenderArts";
 import ServerArtsByRating from "./components/ServerArtsByRating";
 import RenderArts from "./components/RenderArts";
+import SignUp from "./components/SignUp";
+
+export const dynamic = "force-dynamic";
+
 
 export default async function Home() {
   const supabase = createServerComponentClient<Database>({ cookies });
