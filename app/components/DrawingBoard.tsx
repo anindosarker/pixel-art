@@ -88,6 +88,10 @@ export default function DrawingBoard() {
   }, [selectedDivs]);
 
   const handleFinishClick = async () => {
+    if (selectedDivs.length === 0) {
+      toast.error("Please select some colors!");
+      return;
+    }
     const coloredDivs = selectedDivs
       .filter((div) => div.color)
       .map((div) => ({
@@ -137,6 +141,7 @@ export default function DrawingBoard() {
               "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
               err
             );
+            setArtExistsMsg("Art already exists!")
             toast.error(`Duplicate art!`, { id: notification });
           });
         setArtSubmitting(false);
