@@ -1,9 +1,10 @@
 import { Database } from "@/lib/database.types";
-import { supabase } from "@/lib/supabase";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET(request: Request) {
+  const supabase = createServerComponentClient<Database>({ cookies });
   const { searchParams } = new URL(request.url);
   const filter = searchParams.get("filter");
 
@@ -33,6 +34,8 @@ export async function GET(request: Request) {
 }
 
 export async function POST(req: NextRequest) {
+  const supabase = createServerComponentClient<Database>({ cookies });
+
   const body = await req.json();
 
   let artData: Database["public"]["Tables"]["arts"]["Insert"] = {

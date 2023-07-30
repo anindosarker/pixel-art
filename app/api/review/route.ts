@@ -1,9 +1,11 @@
 import { Database } from "@/lib/database.types";
-import { supabase } from "@/lib/supabase";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET() {
+  const supabase = createRouteHandlerClient<Database>({ cookies });
+
   let { data, error } = await supabase.from("reviews").select("*");
 
   const {
@@ -19,8 +21,10 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const supabase = createRouteHandlerClient<Database>({ cookies });
+
   const body = await req.json();
-  console.log("rating", body)
+  console.log("rating", body);
   let reviewData: Database["public"]["Tables"]["reviews"]["Insert"] = {
     ...body,
   };
