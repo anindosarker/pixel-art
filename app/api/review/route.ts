@@ -1,9 +1,7 @@
 import { Database } from "@/lib/database.types";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
-const supabase = createRouteHandlerClient<Database>({ cookies });
 
 export async function GET() {
   let { data, error } = await supabase.from("reviews").select("*");
