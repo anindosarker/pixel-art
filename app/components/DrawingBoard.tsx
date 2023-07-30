@@ -208,7 +208,7 @@ export default function DrawingBoard() {
 
   return (
     <div className="flex flex-col items-center justify-between">
-      <div className="flex w-full justify-center gap-x-12">
+      <div className="flex flex-col sm:flex-row w-full justify-center gap-x-12">
         <ColorSelection setSelectedColor={setSelectedColor} />
         <div className="" id="drawing-board">
           {renderGrid()}
