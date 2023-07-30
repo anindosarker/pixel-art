@@ -1,12 +1,12 @@
 "use client";
 import { Database } from "@/lib/database.types";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import domtoimage from "dom-to-image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { v4 } from "uuid";
 import ColorSelection from "./ColorSelection";
+import { supabase } from "@/lib/supabase";
 
 interface DivColor {
   row: number;
@@ -24,7 +24,6 @@ export default function DrawingBoard() {
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
 
-  const supabase = createClientComponentClient<Database>();
   let notification: string;
 
   const handleDivClick = (row: number, col: number) => {
@@ -137,10 +136,10 @@ export default function DrawingBoard() {
             );
             toast.error("Error saving art!", { id: notification });
           });
-        toast.success("Product Uploaded!", { id: notification });
+        toast.success("Art uploaded! 😀", { id: notification });
         setArtSubmitting(false);
         setSelectedDivs([]);
-        router.replace("/");
+        router.refresh();
       });
   };
 

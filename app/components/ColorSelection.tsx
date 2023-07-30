@@ -25,7 +25,7 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
       className="w-10 h-10 mx-2 cursor-pointer rounded-full"
       style={{
         backgroundColor: color,
-        border: selected  ? "2px solid black" : "none",
+        border: selected ? "2px solid black" : "none",
       }}
       onClick={onClick}
     ></div>
@@ -34,11 +34,11 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
 
 export default function ColorSelection({ setSelectedColor }: any) {
   const rainbowColors = [
+    "#0035ff",
     "#fff707",
     "#ffffff",
     "#000000",
     "#fe0000",
-    "#0035ff",
     "#15d200",
     "#5508ff",
     "#ff41a1",

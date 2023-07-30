@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
-  const supabase = createClientComponentClient();
   const router = useRouter();
 
   const handleLogout = async () => {
