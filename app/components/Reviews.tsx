@@ -25,7 +25,6 @@ export default function Reviews({
     | any;
 }) {
   const router = useRouter();
-  console.log(data);
   const [state, setState] = useState({
     rating: Math.floor(data?.avg_rating as number) || 0,
   });
@@ -44,7 +43,7 @@ export default function Reviews({
     const response = await axios
       .post("/api/review", body)
       .then((res) => {
-        toast.success("Review added!")
+        toast.success("Review added!");
         router.refresh();
       })
       .catch((err) => toast.error("Error adding review!"));
