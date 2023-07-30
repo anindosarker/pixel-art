@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 export default function Grid() {
@@ -13,5 +14,9 @@ export default function Grid() {
     );
   }
 
-  return <div className="h-full w-full grid grid-cols-64 grid-rows-64 gap-2">{cells}</div>;
+  return (
+    <div className="h-full w-full grid grid-cols-64 grid-rows-64 gap-2">
+      {cells}
+    </div>
+  );
 }

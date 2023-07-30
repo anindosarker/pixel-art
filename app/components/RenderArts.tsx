@@ -1,12 +1,10 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import { Ring } from "@uiball/loaders";
 import Reviews from "./Reviews";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import ServerRenderArts from "./ServerRenderArts";
-import ServerArtsByRating from "./ServerArtsByRating";
 
 const RenderArts = () => {
   const [options] = useState(["Time Uploaded", "Rating"]);

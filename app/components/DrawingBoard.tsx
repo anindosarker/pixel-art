@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { v4 } from "uuid";
-import ButtonLoader from "./ButtonLoader";
 import ColorSelection from "./ColorSelection";
 
 interface DivColor {

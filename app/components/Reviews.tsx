@@ -1,9 +1,8 @@
 "use client";
-import { Database } from "@/lib/database.types";
 import { Rating } from "@smastrom/react-rating";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import "@smastrom/react-rating/style.css";
 import axios from "axios";
 import toast from "react-hot-toast";

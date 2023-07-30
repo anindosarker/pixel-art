@@ -13,7 +13,7 @@
     "@formkit/auto-animate": "^0.7.0",
     "@smastrom/react-rating": "^1.3.1",
     "@supabase/auth-helpers-nextjs": "^0.7.3",
-    "@supabase/supabase-js": "^2.26.0",
+    "@supabase/supabase-js": "^2.31.0",
     "@types/bcrypt": "^5.0.0",
     "@types/mongoose": "^5.11.97",
     "@types/node": "20.4.2",
