@@ -1,9 +1,9 @@
 import { Database } from "@/lib/database.types";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const supabase = createServerComponentClient<Database>({ cookies });
+const supabase = createRouteHandlerClient<Database>({ cookies });
 
 export async function GET() {
   let { data, error } = await supabase.from("reviews").select("*");
