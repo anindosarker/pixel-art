@@ -128,15 +128,17 @@ export default function DrawingBoard() {
           },
           body: JSON.stringify(data),
         })
-          .then((res) => res.json())
+          .then((res) => {
+            toast.success("Art uploaded! 😀", { id: notification });
+            return res.json();
+          })
           .catch((err) => {
             console.log(
               "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
               err
             );
-            toast.error("Error saving art!", { id: notification });
+            toast.error(`Duplicate art!`, { id: notification });
           });
-        toast.success("Art uploaded! 😀", { id: notification });
         setArtSubmitting(false);
         setSelectedDivs([]);
         router.refresh();

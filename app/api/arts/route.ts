@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase.from("arts").insert(artData).select();
   if (error) {
-    return NextResponse.json(error, { status: 500 });
+    return NextResponse.error();
   }
   return NextResponse.json(data);
 }

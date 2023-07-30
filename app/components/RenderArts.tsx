@@ -50,7 +50,7 @@ const RenderArts = () => {
                   <Ring color="#fff" />
                 </div>
               ) : (
-                arts && arts.map((art) => <Reviews key={index} data={art} />)
+                arts && arts.map((art, index) => <Reviews key={index} data={art} />)
               )}
             </TabPanel>
           ))}
