@@ -1,5 +1,4 @@
 "use client";
-import { Database } from "@/lib/database.types";
 import domtoimage from "dom-to-image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -146,7 +145,7 @@ export default function DrawingBoard() {
           });
         setArtSubmitting(false);
         setSelectedDivs([]);
-        router.refresh();
+        router.push('/');
       });
   };
 

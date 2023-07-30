@@ -3,7 +3,7 @@ import DrawingBoard from "./DrawingBoard";
 
 export default function Canvas() {
   return (
-    <div className="w-screen">
+    <div className="">
       <DrawingBoard />
     </div>
   );

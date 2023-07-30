@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import autoAnimate from "@formkit/auto-animate";
-import { Ring } from "@uiball/loaders";
+import { Ring, Waveform } from "@uiball/loaders";
 import Reviews from "./Reviews";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
@@ -28,12 +28,7 @@ const RenderArts = () => {
   }, [selectedTab]);
 
   return (
-    <div className="flex flex-col gap-8" ref={parentRef}>
-      {loading && (
-        <div className="flex items-center justify-center">
-          <Ring color="#fff" />
-        </div>
-      )}
+    <div className="flex flex-col gap-8 w-2/3" ref={parentRef}>
       <div>
         <Tabs>
           <TabList>
@@ -47,7 +42,7 @@ const RenderArts = () => {
             <TabPanel key={index}>
               {loading ? (
                 <div className="flex items-center justify-center">
-                  <Ring color="#fff" />
+                  <Waveform color="#fff" />
                 </div>
               ) : (
                 arts && arts.map((art, index) => <Reviews key={index} data={art} />)
