@@ -123,7 +123,6 @@ export default function DrawingBoard() {
           image_url: url,
         };
 
-        setArtSubmitting(true);
         const response = await fetch("/api/arts", {
           method: "POST",
           headers: {
@@ -133,6 +132,7 @@ export default function DrawingBoard() {
         })
           .then((res) => {
             toast.success("Art uploaded! 😀", { id: notification });
+
             return res.json();
           })
           .catch((err) => {
@@ -140,12 +140,12 @@ export default function DrawingBoard() {
               "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
               err
             );
-            setArtExistsMsg("Art already exists!")
+            setArtExistsMsg("Art already exists!");
             toast.error(`Duplicate art!`, { id: notification });
           });
         setArtSubmitting(false);
         setSelectedDivs([]);
-        router.push('/');
+        router.refresh();
       });
   };
 

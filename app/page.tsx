@@ -1,4 +1,4 @@
-import Canvas from "./components/Canvas";
+import DrawingBoard from "./components/DrawingBoard";
 import Navbar from "./components/Navbar";
 import RenderArts from "./components/RenderArts";
 
@@ -10,7 +10,7 @@ export default function Home() {
         <div className="text-3xl font-semibold text-white tracking-widest">
           Welcome to OnlyMP3 <br />
         </div>
-        <Canvas />
+        <DrawingBoard/>
         <div className="text-3xl font-semibold text-white tracking-widest">
           Arts by other users
         </div>
