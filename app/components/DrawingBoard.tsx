@@ -13,9 +13,13 @@ interface DivColor {
   color: string;
 }
 
-export default function DrawingBoard() {
+interface DrawingBoardProps {
+  setFetch: any;
+}
+
+export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const router = useRouter();
-  const [artSubmitting, setArtSubmitting] = useState(false);
+  // const [artSubmitting, setArtSubmitting] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
   const gridSize: number = 32;
@@ -132,7 +136,6 @@ export default function DrawingBoard() {
         })
           .then((res) => {
             toast.success("Art uploaded! 😀", { id: notification });
-
             return res.json();
           })
           .catch((err) => {
@@ -143,10 +146,11 @@ export default function DrawingBoard() {
             setArtExistsMsg("Art already exists!");
             toast.error(`Duplicate art!`, { id: notification });
           });
-        setArtSubmitting(false);
+        setFetch(true);
         setSelectedDivs([]);
         router.refresh();
       });
+    setFetch(false);
   };
 
   async function handleUpload(image: File) {
