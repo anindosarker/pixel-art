@@ -190,19 +190,13 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             onClick={() => handleDivClick(i, j)}
             style={{
               backgroundColor,
-              width: "20px",
-              height: "20px",
-              border: "1px solid gray",
-              display: "inline-block",
-              margin: 0,
-              padding: 0,
             }}
-            className="rounded-sm"
+            className="w-4 h-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 border border-gray-400 inline-block m-0 p-0 rounded-sm"
           />
         );
       }
       grid.push(
-        <div key={i} style={{ lineHeight: 0 }}>
+        <div key={i} className="flex flex-row" style={{ lineHeight: 0 }}>
           {row}
         </div>
       );
