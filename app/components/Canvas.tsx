@@ -15,7 +15,7 @@ export default function Canvas() {
         </div>
         <DrawingBoard setFetch={setFetch} />
         <div className="text-3xl font-semibold text-white tracking-widest">
-          Arts by other users
+          Art feed
         </div>
         <RenderArts fetch={fetch}/>
       </main>
