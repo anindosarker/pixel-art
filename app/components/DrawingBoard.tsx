@@ -13,9 +13,13 @@ interface DivColor {
   color: string;
 }
 
-export default function DrawingBoard() {
+interface DrawingBoardProps {
+  setFetch: any;
+}
+
+export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const router = useRouter();
-  const [artSubmitting, setArtSubmitting] = useState(false);
+  // const [artSubmitting, setArtSubmitting] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
   const gridSize: number = 32;
@@ -123,7 +127,6 @@ export default function DrawingBoard() {
           image_url: url,
         };
 
-        setArtSubmitting(true);
         const response = await fetch("/api/arts", {
           method: "POST",
           headers: {
@@ -140,13 +143,14 @@ export default function DrawingBoard() {
               "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
               err
             );
-            setArtExistsMsg("Art already exists!")
+            setArtExistsMsg("Art already exists!");
             toast.error(`Duplicate art!`, { id: notification });
           });
-        setArtSubmitting(false);
+        setFetch(true);
         setSelectedDivs([]);
-        router.push('/');
+        router.refresh();
       });
+    setFetch(false);
   };
 
   async function handleUpload(image: File) {
@@ -186,19 +190,13 @@ export default function DrawingBoard() {
             onClick={() => handleDivClick(i, j)}
             style={{
               backgroundColor,
-              width: "20px",
-              height: "20px",
-              border: "1px solid gray",
-              display: "inline-block",
-              margin: 0,
-              padding: 0,
             }}
-            className="rounded-sm"
+            className="w-4 h-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 border border-gray-400 inline-block m-0 p-0 rounded-sm"
           />
         );
       }
       grid.push(
-        <div key={i} style={{ lineHeight: 0 }}>
+        <div key={i} className="flex flex-row" style={{ lineHeight: 0 }}>
           {row}
         </div>
       );

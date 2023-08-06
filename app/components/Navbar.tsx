@@ -1,14 +1,16 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/images/logo.webp";
 import toast from "react-hot-toast";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export default function Navbar() {
   const router = useRouter();
+
+  const supabase = createClientComponentClient();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -18,7 +20,7 @@ export default function Navbar() {
 
   return (
     <header className="shadow-xl border-b-2 border-white sticky top-0 z-10 bg-black">
-      <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between w-full gap-8 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-center w-full gap-8 px-4 sm:px-6 lg:px-8">
         <Link
           className="items-center justify-between flex text-teal-600"
           href="/"
