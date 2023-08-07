@@ -7,9 +7,13 @@ import "@smastrom/react-rating/style.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { fetchArts } from "../action/fetchAction";
 
 export default function Reviews({
   data,
+  setLoading,
+  selectedTab,
+  setArts,
 }: {
   data:
     | {
@@ -23,6 +27,9 @@ export default function Reviews({
         };
       }
     | any;
+    setLoading: any;
+    selectedTab: any;
+    setArts: any
 }) {
   const router = useRouter();
   const [state, setState] = useState({
@@ -45,6 +52,7 @@ export default function Reviews({
       .then((res) => {
         toast.success("Review added!");
         router.refresh();
+        fetchArts(setLoading, selectedTab, setArts);
       })
       .catch((err) => toast.error("Error adding review!"));
   };
