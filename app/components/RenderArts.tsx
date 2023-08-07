@@ -25,7 +25,10 @@ export default function RenderArts({ fetch }: RenderArtsProps) {
   }, [selectedTab, fetch]);
 
   return (
-    <div className="flex flex-col gap-8 w-2/3 items-center justify-center" ref={parentRef}>
+    <div
+      className="flex flex-col gap-8 w-2/3 items-center justify-center"
+      ref={parentRef}
+    >
       <div>
         <Tabs className="flex flex-col items-center justify-center">
           <TabList>
@@ -43,7 +46,15 @@ export default function RenderArts({ fetch }: RenderArtsProps) {
                 </div>
               ) : (
                 arts &&
-                arts.map((art, index) => <Reviews key={index} data={art} setLoading={setLoading} selectedTab={selectedTab} setArts={setArts} />)
+                arts?.map((art, index) => (
+                  <Reviews
+                    key={index}
+                    data={art}
+                    setLoading={setLoading}
+                    selectedTab={selectedTab}
+                    setArts={setArts}
+                  />
+                ))
               )}
             </TabPanel>
           ))}
@@ -51,6 +62,4 @@ export default function RenderArts({ fetch }: RenderArtsProps) {
       </div>
     </div>
   );
-};
-
-
+}
