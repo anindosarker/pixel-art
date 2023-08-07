@@ -40,7 +40,7 @@ export default function ColorSelection({ setSelectedColor }: any) {
     "#000000",
     "#fe0000",
     "#15d200",
-    "#800080",
+    "#592693",
     "#ff41a1",
     "#ff5730",
   ];
