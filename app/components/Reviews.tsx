@@ -27,9 +27,9 @@ export default function Reviews({
         };
       }
     | any;
-    setLoading: any;
-    selectedTab: any;
-    setArts: any
+  setLoading: any;
+  selectedTab: any;
+  setArts: any;
 }) {
   const router = useRouter();
   const [state, setState] = useState({
@@ -75,7 +75,6 @@ export default function Reviews({
             <a href="" className="hover:underline">
               {data?.user_id?.email || "anducharkhar@gmail.com"}
             </a>
-            <p>{data?.id}</p>
           </h6>
 
           <div className="text-sm font-semibold">
