@@ -43,7 +43,7 @@ export default function RenderArts({ fetch }: RenderArtsProps) {
                 </div>
               ) : (
                 arts &&
-                arts.map((art, index) => <Reviews key={index} data={art} />)
+                arts.map((art, index) => <Reviews key={index} data={art} setLoading={setLoading} selectedTab={selectedTab} setArts={setArts} />)
               )}
             </TabPanel>
           ))}
