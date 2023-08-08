@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { BsEraserFill } from "react-icons/bs";
 
 interface ColorProps {
   color: string;
@@ -20,6 +21,21 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
       ></div>
     );
   }
+
+  if (color === "#000000") {
+    return (
+      <div
+        className="w-10 h-10 mx-2 cursor-pointer rounded-full flex items-center justify-center"
+        onClick={onClick}
+        style={{
+          
+          border: selected ? "2px solid black" : "none",
+        }}
+      >
+        <BsEraserFill color="black" size={28} className="" />
+      </div>
+    );
+  }
   return (
     <div
       className="w-10 h-10 mx-2 cursor-pointer rounded-full"
@@ -28,7 +44,11 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
         border: selected ? "2px solid black" : "none",
       }}
       onClick={onClick}
-    ></div>
+    >
+      {/* {color === "#000000" ? (
+        <BsEraserFill/>
+      ) : ""} */}
+    </div>
   );
 };
 
