@@ -30,10 +30,42 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
 
   let notification: string;
 
+  // const handleDivClick = (row: number, col: number) => {
+  //   if (!selectedColor) {
+  //     toast.error("Please select a color!", { id: notification });
+  //   }
+    
+  //   const existingDiv = selectedDivs.find(
+  //     (div) => div.row === row && div.col === col
+  //   );
+
+  //   if (existingDiv && existingDiv.color === selectedColor) {
+  //     return;
+  //   }
+
+  //   const newSelectedDivs = selectedDivs.filter(
+  //     (div) => !(div.row === row && div.col === col)
+  //   );
+  //   const newDiv: DivColor = { row, col, color: selectedColor };
+  //   newSelectedDivs.push(newDiv);
+  //   setSelectedDivs(newSelectedDivs);
+  // };
+
+  // maruf
   const handleDivClick = (row: number, col: number) => {
     if (!selectedColor) {
       toast.error("Please select a color!", { id: notification });
+      return; 
     }
+
+    if (selectedColor === "#000000") {
+      const newSelectedDivs = selectedDivs.filter(
+        (div) => !(div.row === row && div.col === col)
+      );
+      setSelectedDivs(newSelectedDivs);
+      return;
+    }
+
     const existingDiv = selectedDivs.find(
       (div) => div.row === row && div.col === col
     );
@@ -49,6 +81,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
     newSelectedDivs.push(newDiv);
     setSelectedDivs(newSelectedDivs);
   };
+
 
   const handleDivEnter = (row: number, col: number) => {
     if (isMouseDown.current) {
@@ -101,7 +134,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       .map((div) => ({
         row: div.row,
         col: div.col,
-        color: div.color,
+        // color: div.color,
       }));
 
     coloredDivs.sort((a, b) => a.row - b.row);
@@ -147,12 +180,10 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             setDuplicateArt(true);
             setArtExistsMsg("Art already exists!");
             toast.error(`Duplicate art!`, { id: notification });
-          })
-          .finally(() => {
-            setFetch(true);
-            setSelectedDivs([]);
-            router.refresh();
           });
+        setFetch(true);
+        setSelectedDivs([]);
+        router.refresh();
       });
     setFetch(false);
   };
@@ -186,7 +217,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         const existingDiv = selectedDivs.find(
           (div) => div.row === i && div.col === j
         );
-        const backgroundColor = existingDiv ? existingDiv.color : "black";
+        const backgroundColor = existingDiv ? existingDiv.color : "#000000";
         row.push(
           <div
             key={`${i}-${j}`}
