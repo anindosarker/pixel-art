@@ -22,6 +22,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   // const [artSubmitting, setArtSubmitting] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
+  const [duplicateArt, setDuplicateArt] = useState(false);
   const gridSize: number = 32;
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const isMouseDown = useRef(false);
@@ -143,12 +144,15 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
               "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
               err
             );
+            setDuplicateArt(true);
             setArtExistsMsg("Art already exists!");
             toast.error(`Duplicate art!`, { id: notification });
+          })
+          .finally(() => {
+            setFetch(true);
+            setSelectedDivs([]);
+            router.refresh();
           });
-        setFetch(true);
-        setSelectedDivs([]);
-        router.refresh();
       });
     setFetch(false);
   };
@@ -189,7 +193,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             onMouseEnter={() => handleDivEnter(i, j)}
             onClick={() => handleDivClick(i, j)}
             style={{
-              backgroundColor,
+              backgroundColor: backgroundColor ? backgroundColor : "#000000",
             }}
             className="w-4 h-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 border border-gray-400 inline-block m-0 p-0 rounded-sm"
           />
@@ -218,7 +222,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       >
         Upload
       </button>
-      <div className="text-red-500">{artExistsMsg}</div>
+      {/* <div className="text-red-500">{artExistsMsg}</div> */}
     </div>
   );
 }
