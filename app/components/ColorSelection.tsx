@@ -28,7 +28,6 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
         className="w-10 h-10 mx-2 cursor-pointer rounded-full flex items-center justify-center"
         onClick={onClick}
         style={{
-          
           border: selected ? "2px solid black" : "none",
         }}
       >
@@ -57,12 +56,12 @@ export default function ColorSelection({ setSelectedColor }: any) {
     "#0035ff",
     "#fff707",
     "#ffffff",
-    "#000000",
     "#fe0000",
     "#15d200",
     "#592693",
     "#ff41a1",
     "#ff5730",
+    "#000000",
   ];
   const [selected, setSelected] = useState<string>("");
 
