@@ -134,7 +134,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       .map((div) => ({
         row: div.row,
         col: div.col,
-        // color: div.color,
+        color: div.color,
       }));
 
     coloredDivs.sort((a, b) => a.row - b.row);

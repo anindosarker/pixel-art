@@ -75,7 +75,7 @@ export default function Reviews({
             <a href="" className="hover:underline">
               {data?.user_id?.email || "anducharkhar@gmail.com"}
             </a>
-            <p>{data?.id}</p>
+            {/* <p>{data?.id}</p> */}
           </h6>
 
           <div className="text-sm font-semibold">
