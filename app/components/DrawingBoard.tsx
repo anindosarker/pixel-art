@@ -124,7 +124,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   }, [selectedDivs]);
 
   const handleFinishClick = async () => {
-    if (selectedDivs.length >= 512) {
+    if (selectedDivs.length >= 700) {
       const coloredDivs = [
         {
           row: (Math.floor(Math.random() * (5408 - 1 + 1)) + 1) * -1,
