@@ -1,3 +1,4 @@
+import { Json } from './../../../lib/database.types';
 import { Database } from "@/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -44,6 +45,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase.from("arts").insert(artData).select();
   if (error) {
+    console.log(error.message)
     return NextResponse.error();
   }
   return NextResponse.json(data);

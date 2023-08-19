@@ -34,7 +34,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   //   if (!selectedColor) {
   //     toast.error("Please select a color!", { id: notification });
   //   }
-    
+
   //   const existingDiv = selectedDivs.find(
   //     (div) => div.row === row && div.col === col
   //   );
@@ -55,7 +55,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const handleDivClick = (row: number, col: number) => {
     if (!selectedColor) {
       toast.error("Please select a color!", { id: notification });
-      return; 
+      return;
     }
 
     if (selectedColor === "#000000") {
@@ -81,7 +81,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
     newSelectedDivs.push(newDiv);
     setSelectedDivs(newSelectedDivs);
   };
-
 
   const handleDivEnter = (row: number, col: number) => {
     if (isMouseDown.current) {
@@ -125,6 +124,62 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   }, [selectedDivs]);
 
   const handleFinishClick = async () => {
+    if (selectedDivs.length >= 512) {
+      const coloredDivs = [
+        {
+          row: (Math.floor(Math.random() * (5408 - 1 + 1)) + 1) * -1,
+          col: (Math.floor(Math.random() * (5408 - 1 + 1)) + 1) * -1,
+          color: selectedColor,
+        },
+      ];
+
+      let node = document.getElementById("drawing-board");
+      let imageFile;
+      let url: string;
+      domtoimage
+        //@ts-ignore
+        .toBlob(node)
+        .then(async function (blob) {
+          // use this blob file and make it a png image
+          imageFile = new File([blob], "image.png", { type: "image/png" });
+          url = await handleUpload(imageFile);
+        })
+        .then(async () => {
+          // TODO: upload image to supabase storage, and add new Art to supabase database
+
+          const data = {
+            art_array: coloredDivs,
+            image_url: url,
+          };
+
+          const response = await fetch("/api/arts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => {
+              toast.success("Art uploaded! 😀", { id: notification });
+              return res.json();
+            })
+            .catch((err) => {
+              console.log(
+                "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
+                err
+              );
+              setDuplicateArt(true);
+              setArtExistsMsg("Art already exists!");
+              toast.error(`Duplicate art!`, { id: notification });
+            });
+          setFetch(true);
+          setSelectedDivs([]);
+          router.refresh();
+        });
+      setFetch(false);
+      return;
+    }
+
     if (selectedDivs.length === 0) {
       toast.error("Please select some colors!");
       return;
