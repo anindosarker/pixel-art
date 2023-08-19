@@ -34,7 +34,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   //   if (!selectedColor) {
   //     toast.error("Please select a color!", { id: notification });
   //   }
-    
+
   //   const existingDiv = selectedDivs.find(
   //     (div) => div.row === row && div.col === col
   //   );
@@ -55,7 +55,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const handleDivClick = (row: number, col: number) => {
     if (!selectedColor) {
       toast.error("Please select a color!", { id: notification });
-      return; 
+      return;
     }
 
     if (selectedColor === "#000000") {
@@ -81,7 +81,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
     newSelectedDivs.push(newDiv);
     setSelectedDivs(newSelectedDivs);
   };
-
 
   const handleDivEnter = (row: number, col: number) => {
     if (isMouseDown.current) {

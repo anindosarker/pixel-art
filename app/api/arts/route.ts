@@ -1,3 +1,4 @@
+import { Json } from './../../../lib/database.types';
 import { Database } from "@/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -37,6 +38,36 @@ export async function POST(req: NextRequest) {
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const body = await req.json();
+  console.log(body.art_array)
+
+  // check if art already exists
+  
+  const existingArts = await supabase
+    .from('arts')
+    .select('art_array');
+
+  // Check if art_array already exists in the database
+  const { data: existingArtsData, error: existingArtsError } = await supabase
+    .from('arts')
+    .select('art_array');
+
+  if (existingArtsError) {
+    return NextResponse.error();
+  }
+
+  // Extract art_array values from the response
+  const existingArtArrays = existingArtsData.map(existingArt => existingArt.art_array);
+
+  // Check if art_array already exists in the database
+  const artExists = existingArtArrays.some(existingArtArray =>
+    JSON.stringify(existingArtArray) === JSON.stringify(body.art_array)
+  );
+
+  console.log(artExists);
+  if (artExists) {
+    return NextResponse.error();
+  }
+
 
   let artData: Database["public"]["Tables"]["arts"]["Insert"] = {
     ...body,
