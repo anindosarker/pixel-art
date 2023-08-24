@@ -36,10 +36,10 @@ export async function GET(request: Request) {
 export async function POST(req: NextRequest) {
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const body = await req.json();
-  console.log(body)
+  const art = await req.json();
+
   let artData: Database["public"]["Tables"]["arts"]["Insert"] = {
-    ...body,
+    ...art,
   };
 
   const { data, error } = await supabase.from("arts").insert(artData).select();

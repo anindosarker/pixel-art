@@ -129,18 +129,32 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       toast.error("Please select some colors!");
       return;
     }
-    const coloredDivs = selectedDivs
-      .filter((div) => div.color)
-      .map((div) => ({
-        row: div.row,
-        col: div.col,
-        color: div.color,
-      }));
+    // const coloredDivs = selectedDivs
+    //   .filter((div) => div.color)
+    //   .map((div) => ({
+    //     r: div.row,
+    //     c: div.col,
+    //     cl: div.color,
+    //   }));
 
-    coloredDivs.sort((a, b) => a.row - b.row);
-    coloredDivs.sort((a, b) => a.col - b.col);
+    // coloredDivs.sort((a, b) => a.r - b.r);
+    // coloredDivs.sort((a, b) => a.c - b.c);
+    // console.log(coloredDivs);
 
-    console.log(coloredDivs);
+const coloredDivs = selectedDivs
+  .filter((div) => div.color)
+  .map((div) => `${div.row}-${div.col}-${div.color}`)
+  .sort((a, b) => {
+    const [aRow, aCol] = a.split("-").map(Number);
+    const [bRow, bCol] = b.split("-").map(Number);
+    if (aRow !== bRow) {
+      return aRow - bRow;
+    }
+    return aCol - bCol;
+  })
+  .join(", ");
+
+console.log(coloredDivs);
 
     let node = document.getElementById("drawing-board");
     let imageFile;

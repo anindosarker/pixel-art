@@ -11,7 +11,7 @@ export interface Database {
     Tables: {
       arts: {
         Row: {
-          art_array: Json[]
+          art_array: string
           avg_rating: number | null
           created_at: string | null
           id: number
@@ -19,7 +19,7 @@ export interface Database {
           user_id: string | null
         }
         Insert: {
-          art_array: Json[]
+          art_array: string
           avg_rating?: number | null
           created_at?: string | null
           id?: number
@@ -27,7 +27,7 @@ export interface Database {
           user_id?: string | null
         }
         Update: {
-          art_array?: Json[]
+          art_array?: string
           avg_rating?: number | null
           created_at?: string | null
           id?: number
@@ -73,28 +73,25 @@ export interface Database {
       }
       reviews: {
         Row: {
-          art_id: number | null
-          created_at: string | null
+          art_id: number
+          created_at: string
           description: string | null
-          id: number
           rating: number
-          user_id: string | null
+          user_id: string
         }
         Insert: {
-          art_id?: number | null
-          created_at?: string | null
+          art_id: number
+          created_at?: string
           description?: string | null
-          id?: number
           rating?: number
-          user_id?: string | null
+          user_id?: string
         }
         Update: {
-          art_id?: number | null
-          created_at?: string | null
+          art_id?: number
+          created_at?: string
           description?: string | null
-          id?: number
           rating?: number
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -121,6 +118,14 @@ export interface Database {
           art_id: number
         }
         Returns: number
+      }
+      insert_review: {
+        Args: {
+          art_id: number
+          user_id: string
+          rating: number
+        }
+        Returns: undefined
       }
     }
     Enums: {
