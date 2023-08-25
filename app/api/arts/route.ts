@@ -37,15 +37,21 @@ export async function GET(request: Request) {
 export async function POST(req: NextRequest) {
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  const body = await req.json();
+  const art = await req.json();
+  
+  console.log(art)
 
-  let artData: Database["public"]["Tables"]["arts"]["Insert"] = {
-    ...body,
+  // let artData: Database["public"]["Tables"]["arts"]["Insert"] = {
+  //   ...art,
+  // };
+
+  let artData: any = {
+    ...art,
   };
 
   const { data, error } = await supabase.from("arts").insert(artData).select();
   if (error) {
-    console.log(error.message)
+    console.log(error.message)    
     return NextResponse.error();
   }
   return NextResponse.json(data);

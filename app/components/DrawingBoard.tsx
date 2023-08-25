@@ -184,18 +184,70 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       toast.error("Please select some colors!");
       return;
     }
-    const coloredDivs = selectedDivs
-      .filter((div) => div.color)
-      .map((div) => ({
-        row: div.row,
-        col: div.col,
-        // color: div.color,
-      }));
+    // const coloredDivs = selectedDivs
+    //   .filter((div) => div.color)
+    //   .map((div) => ({
+    //     r: div.row,
+    //     c: div.col,
+    //     cl: div.color,
+    //   }));
 
-    coloredDivs.sort((a, b) => a.row - b.row);
-    coloredDivs.sort((a, b) => a.col - b.col);
+    // coloredDivs.sort((a, b) => a.r - b.r);
+    // coloredDivs.sort((a, b) => a.c - b.c);
+    // console.log(coloredDivs);
 
-    console.log(coloredDivs);
+// const coloredDivs = selectedDivs
+//   .filter((div) => div.color)
+//   .map((div) => `${div.row}-${div.col}-${div.color}`)
+//   .sort((a, b) => {
+//     const [aRow, aCol] = a.split("-").map(Number);
+//     const [bRow, bCol] = b.split("-").map(Number);
+//     if (aRow !== bRow) {
+//       return aRow - bRow;
+//     }
+//     return aCol - bCol;
+//   })
+//   .join(", ");
+
+// console.log(coloredDivs);
+
+// const coloredDivs = selectedDivs
+//   .filter((div) => div.color)
+//   .map((div) => `${div.row}-${div.col}`)
+//   .sort((a, b) => {
+//     const [aRow, aCol] = a.split("-").map(Number);
+//     const [bRow, bCol] = b.split("-").map(Number);
+//     if (aRow !== bRow) {
+//       return aRow - bRow;
+//     }
+//     return aCol - bCol;
+//   })
+//   .join(", ")
+//   .replace(/[,#\-\s]/g, "");
+
+// console.log(coloredDivs);
+
+const coloredDivs = selectedDivs
+  .filter((div) => div.color)
+  .reduce((acc: Record<string, string[]>, div) => {
+    if (!acc[div.color]) {
+      acc[div.color] = [];
+    }
+    acc[div.color].push(`${div.row}${div.col}`);
+    return acc;
+  }, {});
+
+// Sort the indexes for each color
+for (const color in coloredDivs) {
+  coloredDivs[color].sort();
+}
+
+const coloredDivsString = Object.entries(coloredDivs)
+  .map(([color, indexes]: [string, string[]]) => `${color}${indexes.join("")}`)
+  .join("");
+
+console.log(coloredDivsString);
+
 
     let node = document.getElementById("drawing-board");
     let imageFile;
@@ -212,7 +264,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         // TODO: upload image to supabase storage, and add new Art to supabase database
 
         const data = {
-          art_array: coloredDivs,
+          art_array: coloredDivsString,
           image_url: url,
         };
 
