@@ -37,8 +37,14 @@ export async function POST(req: NextRequest) {
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const art = await req.json();
+  
+  console.log(art)
 
-  let artData: Database["public"]["Tables"]["arts"]["Insert"] = {
+  // let artData: Database["public"]["Tables"]["arts"]["Insert"] = {
+  //   ...art,
+  // };
+
+  let artData: any = {
     ...art,
   };
 

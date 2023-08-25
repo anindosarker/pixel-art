@@ -141,20 +141,58 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
     // coloredDivs.sort((a, b) => a.c - b.c);
     // console.log(coloredDivs);
 
+// const coloredDivs = selectedDivs
+//   .filter((div) => div.color)
+//   .map((div) => `${div.row}-${div.col}-${div.color}`)
+//   .sort((a, b) => {
+//     const [aRow, aCol] = a.split("-").map(Number);
+//     const [bRow, bCol] = b.split("-").map(Number);
+//     if (aRow !== bRow) {
+//       return aRow - bRow;
+//     }
+//     return aCol - bCol;
+//   })
+//   .join(", ");
+
+// console.log(coloredDivs);
+
+// const coloredDivs = selectedDivs
+//   .filter((div) => div.color)
+//   .map((div) => `${div.row}-${div.col}`)
+//   .sort((a, b) => {
+//     const [aRow, aCol] = a.split("-").map(Number);
+//     const [bRow, bCol] = b.split("-").map(Number);
+//     if (aRow !== bRow) {
+//       return aRow - bRow;
+//     }
+//     return aCol - bCol;
+//   })
+//   .join(", ")
+//   .replace(/[,#\-\s]/g, "");
+
+// console.log(coloredDivs);
+
 const coloredDivs = selectedDivs
   .filter((div) => div.color)
-  .map((div) => `${div.row}-${div.col}-${div.color}`)
-  .sort((a, b) => {
-    const [aRow, aCol] = a.split("-").map(Number);
-    const [bRow, bCol] = b.split("-").map(Number);
-    if (aRow !== bRow) {
-      return aRow - bRow;
+  .reduce((acc: Record<string, string[]>, div) => {
+    if (!acc[div.color]) {
+      acc[div.color] = [];
     }
-    return aCol - bCol;
-  })
-  .join(", ");
+    acc[div.color].push(`${div.row}${div.col}`);
+    return acc;
+  }, {});
 
-console.log(coloredDivs);
+// Sort the indexes for each color
+for (const color in coloredDivs) {
+  coloredDivs[color].sort();
+}
+
+const coloredDivsString = Object.entries(coloredDivs)
+  .map(([color, indexes]: [string, string[]]) => `${color}${indexes.join("")}`)
+  .join("");
+
+console.log(coloredDivsString);
+
 
     let node = document.getElementById("drawing-board");
     let imageFile;
@@ -171,7 +209,7 @@ console.log(coloredDivs);
         // TODO: upload image to supabase storage, and add new Art to supabase database
 
         const data = {
-          art_array: coloredDivs,
+          art_array: coloredDivsString,
           image_url: url,
         };
 
