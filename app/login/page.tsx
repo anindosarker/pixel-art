@@ -20,11 +20,9 @@ export default function Login() {
     });
 
     if (error) {
-      console.log("👉️ ~ file: page.tsx:24 ~ handleLogin ~ error:\n", error);
       toast.error(`${error}`, { id: notification });
       return;
     }
-    console.log("👉️ ~ file: page.tsx:22 ~ handleSignUp ~ data:\n", data);
     toast.success("Logged in successfully", { id: notification });
     router.push("/");
   };

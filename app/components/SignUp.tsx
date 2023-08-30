@@ -18,12 +18,12 @@ export default function SignUp() {
       setPasswordsMatch(false);
     } else {
       setPasswordsMatch(true);
-      
+
       const data = { email, username, password };
       axios
         .post("/api/createUser", data)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
         })
         .catch((error) => {
           console.log(error);

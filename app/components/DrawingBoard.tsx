@@ -192,7 +192,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       )
       .join("");
 
-    console.log(coloredDivsString);
+    // console.log(coloredDivsString);
 
     let node = document.getElementById("drawing-board");
     let imageFile;

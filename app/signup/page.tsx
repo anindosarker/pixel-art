@@ -27,7 +27,6 @@ export default function Signup() {
     });
 
     if (error) {
-      console.log("👉️ ~ file: page.tsx:16 ~ handleSignUp ~ error:\n", error);
       toast.error(`Something went wrong, ${error.message}`, {
         id: notification,
       });

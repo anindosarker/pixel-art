@@ -15,21 +15,19 @@ export default function Reviews({
   selectedTab,
   setArts,
 }: {
-  data:
-    | {
-        art_array: JSON[];
-        avg_rating: number | null;
-        created_at: string | null;
-        id: number;
-        image_url: string | null;
-        user_id: {
-          email: string | null;
-        };
-      }
-    | any;
-    setLoading: any;
-    selectedTab: any;
-    setArts: any
+  data: {
+    art_array: JSON[];
+    avg_rating: number | null;
+    created_at: string | null;
+    id: number;
+    image_url: string | null;
+    user_id: {
+      email: string | null;
+    };
+  };
+  setLoading: any;
+  selectedTab: any;
+  setArts: any;
 }) {
   const router = useRouter();
   const [state, setState] = useState({
@@ -41,7 +39,7 @@ export default function Reviews({
       ...prev,
       rating: selectedValue,
     }));
-    console.log(selectedValue);
+    // console.log(selectedValue);
     const body = {
       rating: selectedValue,
       art_id: data?.id,
@@ -59,7 +57,7 @@ export default function Reviews({
 
   return (
     <article className="rounded-xl bg-black border border-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 mb-5">
-      <div className="flex items-start sm:gap-8">
+      <div className="flex flex-col items-start sm:gap-8">
         <div className="">
           <Image
             src={data?.image_url || "/images/art (3).png"}
@@ -71,24 +69,20 @@ export default function Reviews({
         </div>
 
         <div>
-          <h6 className="text-xs">
-            <a href="" className="hover:underline">
-              {data?.user_id?.email || "anducharkhar@gmail.com"}
-            </a>
+          <h6 className="text-sm">
+            <p className="hover:underline">
+              Art by:{" "}
+              <span className="font-semibold">
+                {data?.user_id?.email?.split("@")[0] || "Random User"}
+              </span>
+            </p>
             {/* <p>{data?.id}</p> */}
           </h6>
 
-          <div className="text-sm font-semibold">
-            Rating: {data?.avg_rating}/5
+          <div className="text-sm">
+            Rating: <span className="font-semibold">{data?.avg_rating}/5</span>
           </div>
-          <div className="">
-            <Rating
-              style={{ maxWidth: 250 }}
-              value={state.rating}
-              onChange={handleRating}
-            />
-          </div>
-          <div className="mt-4 sm:flex sm:items-center sm:gap-2">
+          <div className="sm:flex sm:items-center sm:gap-2 py-2">
             <div className="flex items-center gap-1 text-gray-500">
               <svg
                 className="h-4 w-4"
@@ -113,6 +107,18 @@ export default function Reviews({
                 ago
               </p>
             </div>
+          </div>
+
+          <div className="mt-10">
+            <Rating
+              style={{ maxWidth: 250 }}
+              value={state.rating}
+              onChange={handleRating}
+            />
+          </div>
+
+          <div className="text-xs py-2">
+            Add your review here. (you can only rate once)
           </div>
         </div>
       </div>
