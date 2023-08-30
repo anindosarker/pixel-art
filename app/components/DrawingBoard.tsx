@@ -196,58 +196,59 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
     // coloredDivs.sort((a, b) => a.c - b.c);
     // console.log(coloredDivs);
 
-// const coloredDivs = selectedDivs
-//   .filter((div) => div.color)
-//   .map((div) => `${div.row}-${div.col}-${div.color}`)
-//   .sort((a, b) => {
-//     const [aRow, aCol] = a.split("-").map(Number);
-//     const [bRow, bCol] = b.split("-").map(Number);
-//     if (aRow !== bRow) {
-//       return aRow - bRow;
-//     }
-//     return aCol - bCol;
-//   })
-//   .join(", ");
+    // const coloredDivs = selectedDivs
+    //   .filter((div) => div.color)
+    //   .map((div) => `${div.row}-${div.col}-${div.color}`)
+    //   .sort((a, b) => {
+    //     const [aRow, aCol] = a.split("-").map(Number);
+    //     const [bRow, bCol] = b.split("-").map(Number);
+    //     if (aRow !== bRow) {
+    //       return aRow - bRow;
+    //     }
+    //     return aCol - bCol;
+    //   })
+    //   .join(", ");
 
-// console.log(coloredDivs);
+    // console.log(coloredDivs);
 
-// const coloredDivs = selectedDivs
-//   .filter((div) => div.color)
-//   .map((div) => `${div.row}-${div.col}`)
-//   .sort((a, b) => {
-//     const [aRow, aCol] = a.split("-").map(Number);
-//     const [bRow, bCol] = b.split("-").map(Number);
-//     if (aRow !== bRow) {
-//       return aRow - bRow;
-//     }
-//     return aCol - bCol;
-//   })
-//   .join(", ")
-//   .replace(/[,#\-\s]/g, "");
+    // const coloredDivs = selectedDivs
+    //   .filter((div) => div.color)
+    //   .map((div) => `${div.row}-${div.col}`)
+    //   .sort((a, b) => {
+    //     const [aRow, aCol] = a.split("-").map(Number);
+    //     const [bRow, bCol] = b.split("-").map(Number);
+    //     if (aRow !== bRow) {
+    //       return aRow - bRow;
+    //     }
+    //     return aCol - bCol;
+    //   })
+    //   .join(", ")
+    //   .replace(/[,#\-\s]/g, "");
 
-// console.log(coloredDivs);
+    // console.log(coloredDivs);
 
-const coloredDivs = selectedDivs
-  .filter((div) => div.color)
-  .reduce((acc: Record<string, string[]>, div) => {
-    if (!acc[div.color]) {
-      acc[div.color] = [];
+    const coloredDivs = selectedDivs
+      .filter((div) => div.color)
+      .reduce((acc: Record<string, string[]>, div) => {
+        if (!acc[div.color]) {
+          acc[div.color] = [];
+        }
+        acc[div.color].push(`${div.row}${div.col}`);
+        return acc;
+      }, {});
+
+    // Sort the indexes for each color
+    for (const color in coloredDivs) {
+      coloredDivs[color].sort();
     }
-    acc[div.color].push(`${div.row}${div.col}`);
-    return acc;
-  }, {});
 
-// Sort the indexes for each color
-for (const color in coloredDivs) {
-  coloredDivs[color].sort();
-}
+    const coloredDivsString = Object.entries(coloredDivs)
+      .map(
+        ([color, indexes]: [string, string[]]) => `${color}${indexes.join("")}`
+      )
+      .join("");
 
-const coloredDivsString = Object.entries(coloredDivs)
-  .map(([color, indexes]: [string, string[]]) => `${color}${indexes.join("")}`)
-  .join("");
-
-console.log(coloredDivsString);
-
+    console.log(coloredDivsString);
 
     let node = document.getElementById("drawing-board");
     let imageFile;
