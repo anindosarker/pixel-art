@@ -278,7 +278,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             style={{
               backgroundColor: backgroundColor ? backgroundColor : "#000000",
             }}
-            className="w-4 h-4 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 border border-gray-400 inline-block m-0 p-0 rounded-sm"
+            className="w-3 h-3 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-4 lg:h-4 border border-gray-400 inline-block m-0 p-0 rounded-sm"
           />
         );
       }
@@ -292,8 +292,8 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between">
-      <div className="flex flex-col sm:flex-row w-full justify-center gap-x-12">
+    <div className="flex flex-col items-center justify-between px-4">
+      <div className="flex flex-col sm:flex-row justify-between sm:justify-center sm:gap-x-12 p-6">
         <ColorSelection setSelectedColor={setSelectedColor} />
         <div className="" id="drawing-board">
           {renderGrid()}

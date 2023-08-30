@@ -50,6 +50,8 @@
   },
   "devDependencies": {
     "@types/dom-to-image": "^2.6.4",
-    "@types/uuid": "^9.0.2"
+    "@types/uuid": "^9.0.2",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.3"
   }
 }

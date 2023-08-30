@@ -12,7 +12,7 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
   if (color === "#ffffff") {
     return (
       <div
-        className="w-10 h-10 mx-2 cursor-pointer rounded-full"
+        className="flex mx-2 h-10 w-10 cursor-pointer rounded-full"
         style={{
           backgroundColor: color,
           border: selected ? "2px solid black" : "2px solid gray",
@@ -25,7 +25,7 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
   if (color === "#000000") {
     return (
       <div
-        className="w-10 h-10 mx-2 cursor-pointer rounded-full flex items-center justify-center"
+        className="mx-2 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
         onClick={onClick}
         style={{
           border: selected ? "2px solid black" : "none",
@@ -37,7 +37,7 @@ const Color = ({ color, selected, onClick }: ColorProps) => {
   }
   return (
     <div
-      className="w-10 h-10 mx-2 cursor-pointer rounded-full"
+      className="mx-2 h-4 w-4 sm:h-10 sm:w-10 cursor-pointer rounded-full"
       style={{
         backgroundColor: color,
         border: selected ? "2px solid black" : "none",
@@ -71,8 +71,8 @@ export default function ColorSelection({ setSelectedColor }: any) {
   };
 
   return (
-    <div className="p-4 h-full mr-5 bg-white rounded-lg shadow-md mb-4">
-      <div className="flex sm:flex-col gap-3 items-center justify-center mb-4">
+    <div className="mb-4 flex max-h-full max-w-2xl rounded-lg bg-white p-2 sm:p-4 shadow-md sm:mb-0">
+      <div className="mb-4 flex items-center justify-center gap-3 sm:mb-0 sm:flex-col">
         {rainbowColors.map((color, index) => (
           <Color
             key={index}
