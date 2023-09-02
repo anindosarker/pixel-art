@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     ...art,
   };
 
-  const { data, error } = await supabase.from("arts").insert(artData).select();
+  const { data, error } = await supabase.from("arts").upsert(artData).select();
   if (error) {
     console.log(error.message)    
     return NextResponse.error();
