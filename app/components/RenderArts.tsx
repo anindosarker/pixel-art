@@ -22,6 +22,7 @@ export default function RenderArts({ fetch }: RenderArtsProps) {
     parentRef.current && autoAnimate(parentRef.current);
     fetchArts(setLoading, selectedTab, setArts);
     if (fetch) fetchArts(setLoading, selectedTab, setArts);
+    console.log(arts)
   }, [selectedTab, fetch]);
 
   return (
