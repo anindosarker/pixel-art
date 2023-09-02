@@ -8,6 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { fetchArts } from "../action/fetchAction";
+import ReactAudioPlayer from "react-audio-player";
 
 export default function Reviews({
   data,
@@ -21,6 +22,12 @@ export default function Reviews({
     created_at: string | null;
     id: number;
     image_url: string | null;
+    audio_url: string | undefined;
+    audio_name: string | null;
+    price: number | null;
+    percentage: number | null;
+    royalty: number | null;
+    nft: boolean | null;
     user_id: {
       email: string | null;
     };
@@ -56,7 +63,7 @@ export default function Reviews({
   };
 
   return (
-    <article className="rounded-xl bg-black border border-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8 mb-5">
+    <article className="mb-5 rounded-xl border border-white bg-black p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
       <div className="flex flex-col items-start sm:gap-8">
         <div className="">
           <Image
@@ -64,7 +71,7 @@ export default function Reviews({
             alt="art"
             width={300}
             height={300}
-            className="object-cover rounded-md"
+            className="rounded-md object-cover"
           />
         </div>
 
@@ -82,7 +89,7 @@ export default function Reviews({
           <div className="text-sm">
             Rating: <span className="font-semibold">{data?.avg_rating}/5</span>
           </div>
-          <div className="sm:flex sm:items-center sm:gap-2 py-2">
+          <div className="py-2 sm:flex sm:items-center sm:gap-2">
             <div className="flex items-center gap-1 text-gray-500">
               <svg
                 className="h-4 w-4"
@@ -102,22 +109,33 @@ export default function Reviews({
               <p className="text-sm font-medium">
                 {/* {format(new Date(data?.created_at || Date.now()), "PP")} */}
                 {formatDistanceToNow(
-                  new Date(data?.created_at || Date.now())
+                  new Date(data?.created_at || Date.now()),
                 )}{" "}
                 ago
               </p>
             </div>
           </div>
+          <div className="">
+            <p>Royalty: {data?.royalty}</p>
+            <p>Percentage: {data?.percentage}</p>
+            <p>Price: {data?.price}</p>
+            <p>NFT: {data?.nft}</p>
+            <p>Audio: {data?.audio_name}</p>
+            {/* <p>{data?.audio_url}</p> */}
+          </div>
 
           <div className="mt-10">
-            <Rating
+            {/* <Rating
               style={{ maxWidth: 250 }}
               value={state.rating}
               onChange={handleRating}
-            />
+            /> */}
+            {data?.audio_name && (
+              <ReactAudioPlayer src={data?.audio_url} controls />
+            )}
           </div>
 
-          <div className="text-xs py-2">
+          <div className="py-2 text-xs">
             Add your review here. (you can only rate once)
           </div>
         </div>
