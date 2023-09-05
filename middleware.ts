@@ -11,9 +11,9 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
+  // if (!session) {
+  //   return NextResponse.redirect(new URL("/login", req.url));
+  // }
 
   return res;
 }
