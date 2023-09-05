@@ -120,7 +120,7 @@ export default function Reviews({
             <p>Percentage: {data?.percentage}</p>
             <p>Price: {data?.price}</p>
             <p>NFT: {data?.nft}</p>
-            <p>Audio: {data?.audio_name}</p>
+            {/* <p>Audio: {data?.audio_name}</p> */}
             {/* <p>{data?.audio_url}</p> */}
           </div>
 
