@@ -235,6 +235,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       setArtExistsMsg("Art already exists!");
       toast.error(`Duplicate art!`, { id: notification });
     }
+    setFetch(false)
   };
 
 
