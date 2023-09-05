@@ -161,64 +161,90 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
 
     // console.log(coloredDivsString);
 
-    let node = document.getElementById("drawing-board");
-    let imageFile;
-    let url: string;
-    let audio_url: string;
-    domtoimage
-      //@ts-ignore
-      .toBlob(node)
-      .then(async function (blob) {
-        // use this blob file and make it a png image
-        imageFile = new File([blob], "image.png", { type: "image/png" });
-        url = await handleUpload(imageFile);
-        
-      })
-      .then(async () => {
-        // TODO: upload image to supabase storage, and add new Art to supabase database
-        audio_url = await handleAudioUpload(audioFile!);
-        const data = {
-          art_array: coloredDivsString,
-          image_url: url,
-          audio_url: audio_url,
-          audio_name: audioFile?.name,
-          nft: nft,
-          price: price,
-          percentage: percentage,
-          royalty: royalty,
-        };
+    const data = {
+      art_array: coloredDivsString,
+      image_url: "",
+      audio_url: "",
+      audio_name: "",
+      nft: nft,
+      price: price,
+      percentage: percentage,
+      royalty: royalty,
+    };
 
-        const response = await fetch("/api/arts", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((res) => {
-            toast.success("Art uploaded! 😀", { id: notification });
-            return res.json();
+    const response = await fetch("/api/arts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then(async (res) => {
+        const newData = await res.json();
+        let node = document.getElementById("drawing-board");
+        let imageFile;
+        let url: string;
+        let audio_url: string;
+        domtoimage
+          //@ts-ignore
+          .toBlob(node)
+          .then(async function (blob) {
+            // use this blob file and make it a png image
+            imageFile = new File([blob], "image.png", { type: "image/png" });
+            url = await handleUpload(imageFile);
           })
-          .catch((err) => {
-            console.log(
-              "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
-              err,
-            );
-            setDuplicateArt(true);
-            setArtExistsMsg("Art already exists!");
-            toast.error(`Duplicate art!`, { id: notification });
-          });
-        setFetch(true);
-        setSelectedDivs([]);
-        setAudioFile(null);
-        setNft(0);
-        setPrice(0);
-        setPercentage(0);
-        setRoyalty(0);
+          .then(async () => {
+            // TODO: upload image to supabase storage, and add new Art to supabase database
+            audio_url = await handleAudioUpload(audioFile!);
+            const data = {
+              ...newData[0],
+              image_url: url,
+              audio_url: audio_url,
+              audio_name: audioFile?.name,
+            };
 
-        router.refresh();
+            const response = await fetch("/api/arts", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((res) => {
+                toast.success("Art uploaded! 😀", { id: notification });
+                return res.json();
+              })
+              .catch((err) => {
+                console.log(
+                  "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
+                  err,
+                );
+                setDuplicateArt(true);
+                setArtExistsMsg("Art already exists!");
+                toast.error(`Duplicate art!`, { id: notification });
+              });
+            setFetch(true);
+            setSelectedDivs([]);
+            setAudioFile(null);
+            setNft(0);
+            setPrice(0);
+            setPercentage(0);
+            setRoyalty(0);
+
+            router.refresh();
+          });
+        setFetch(false);
+      })
+
+      .catch((err) => {
+        console.log(
+          "🚀 ~ file: NewCreation.tsx:202 ~ handleFinishClick ~ err:\n",
+          err,
+        );
+        setDuplicateArt(true);
+        setArtExistsMsg("Art already exists!");
+        toast.error(`Duplicate art!`, { id: notification });
       });
-    setFetch(false);
   };
 
   async function handleUpload(image: File) {
@@ -302,9 +328,9 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           {renderGrid()}
         </div>
       </div>
-      <div className="mt-8 text-center">
+      <div className="flex flex-col mt-8 text-center">
         <label className="block text-lg font-medium text-white">
-          <BsPlusCircleFill className="inline-block mr-2 cursor-pointer" />
+          <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
           Upload MP3 file
           <input
             type="file"
@@ -317,62 +343,70 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         </label>
         {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>}
       </div>
-      <div className="mt-5 font-bold">
-        How many nfts do you want to mint?
-        <label htmlFor="nfts" className="block text-xs font-medium"></label>
-        <input
-          type="number"
-          placeholder=""
-          className="mt-1 w-full rounded-md text-black shadow-sm sm:text-sm"
-          onChange={(e) => {
-            setNft(parseInt(e.target.value));
-          }}
-          value={nft}
-        />
-      </div>
-      <div className="mt-5 font-bold">
-        Price in $OMP3?
-        <label htmlFor="nfts" className="block text-xs font-medium"></label>
-        <input
-          type="number"
-          placeholder=""
-          className="mt-1 w-full rounded-md text-black shadow-sm sm:text-sm"
-          onChange={(e) => {
-            setPrice(parseInt(e.target.value));
-          }}
-          value={price}
-        />
-      </div>
-      <p className="mt-5 font-bold">How much percentage do you want to give?</p>
+      <div className="flex flex-col">
+        <div className="p-5 font-bold">
+          How many nfts do you want to mint?
+          <label htmlFor="nfts" className="block text-xs font-medium"></label>
+          <input
+            type="number"
+            placeholder=""
+            className="mt-1 p-2 w-full rounded-md text-black shadow-sm sm:text-sm"
+            onChange={(e) => {
+              setNft(parseInt(e.target.value));
+            }}
+            value={nft}
+          />
+        </div>
+        <div className="p-5 font-bold">
+          Price in $OMP3?
+          <label htmlFor="nfts" className="block text-xs font-medium"></label>
+          <input
+            type="number"
+            placeholder=""
+            className="mt-1 p-2 w-full rounded-md text-black shadow-sm sm:text-sm"
+            onChange={(e) => {
+              setPrice(parseInt(e.target.value));
+            }}
+            value={price}
+          />
+        </div>
+        <div className="p-5">
+          <p className="mt-5 font-bold">
+            How much percentage do you want to give?
+          </p>
 
-      <Slider
-        min={0}
-        max={100}
-        defaultValue={0}
-        value={percentage}
-        onChange={(e) => {
-          // @ts-ignore
-          setPercentage(e);
-        }}
-      />
-      <p className="font-bold">{percentage}%</p>
-      <p className="mt-5 font-bold">
-        What royalty pecentage do you want per transaction?
-      </p>
+          <Slider
+            min={0}
+            max={100}
+            defaultValue={0}
+            value={percentage}
+            onChange={(e) => {
+              // @ts-ignore
+              setPercentage(e);
+            }}
+          />
+          <p className="font-bold">{percentage}%</p>
+        </div>
+        <div className="p-5">
+          <p className="mt-5 font-bold">
+            What royalty pecentage do you want per transaction?
+          </p>
 
-      <Slider
-        min={0}
-        max={10}
-        defaultValue={0}
-        value={royalty}
-        onChange={(e) => {
-          // @ts-ignore
-          setRoyalty(e);
-        }}
-      />
-      <p className="font-bold">{royalty}%</p>
+          <Slider
+            min={0}
+            max={10}
+            defaultValue={0}
+            value={royalty}
+            onChange={(e) => {
+              // @ts-ignore
+              setRoyalty(e);
+            }}
+          />
+          <p className="font-bold">{royalty}%</p>
+        </div>
+      </div>
       <button
-        className="mt-4 rounded bg-[#a2cea6ff] px-4 py-2 text-white font-bold hover:bg-[#b5e7b8]"
+        className="mt-4 rounded bg-[#a2cea6ff] px-4 py-2 font-bold text-white hover:bg-[#b5e7b8]"
         onClick={handleFinishClick}
       >
         MINT
