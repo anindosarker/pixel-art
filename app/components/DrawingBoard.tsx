@@ -229,13 +229,14 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       setPercentage(0);
       setRoyalty(0);
       router.refresh();
+      setFetch(false);
     } catch (error) {
       console.error("Error:", error);
       setDuplicateArt(true);
       setArtExistsMsg("Art already exists!");
       toast.error(`Duplicate art!`, { id: notification });
     }
-    setFetch(false)
+    
   };
 
 
