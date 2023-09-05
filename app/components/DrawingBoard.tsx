@@ -304,7 +304,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       </div>
       <div className="mt-8 text-center">
         <label className="block text-lg font-medium text-white">
-          <BsPlusCircleFill className="inline-block mr-2 cursor-pointer" />
+          <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
           Upload MP3 file
           <input
             type="file"
@@ -317,6 +317,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         </label>
         {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>}
       </div>
+      <div className="flex flex-col">
       <div className="mt-5 font-bold">
         How many nfts do you want to mint?
         <label htmlFor="nfts" className="block text-xs font-medium"></label>
@@ -330,7 +331,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           value={nft}
         />
       </div>
-      <div className="mt-5 font-bold">
+      <div className="fohandleFnt-bold mt-5">
         Price in $OMP3?
         <label htmlFor="nfts" className="block text-xs font-medium"></label>
         <input
@@ -371,8 +372,9 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         }}
       />
       <p className="font-bold">{royalty}%</p>
+      </div>
       <button
-        className="mt-4 rounded bg-[#a2cea6ff] px-4 py-2 text-white font-bold hover:bg-[#b5e7b8]"
+        className="mt-4 rounded bg-[#a2cea6ff] px-4 py-2 font-bold text-white hover:bg-[#b5e7b8]"
         onClick={handleFinishClick}
       >
         MINT

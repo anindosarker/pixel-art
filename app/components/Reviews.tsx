@@ -134,10 +134,6 @@ export default function Reviews({
               <ReactAudioPlayer src={data?.audio_url} controls />
             )}
           </div>
-
-          <div className="py-2 text-xs">
-            Add your review here. (you can only rate once)
-          </div>
         </div>
       </div>
     </article>
