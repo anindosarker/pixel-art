@@ -30,12 +30,12 @@ export default function Navbar() {
           <h1 className="text-2xl font-bold text-white">OnlyMP3</h1>
         </Link>
 
-        <button
+        {/* <button
           className="block rounded-md bg-orange-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-orange-700"
           onClick={handleLogout}
         >
           Sign out
-        </button>
+        </button> */}
       </div>
     </header>
   );

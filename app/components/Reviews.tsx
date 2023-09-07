@@ -20,6 +20,7 @@ export default function Reviews({
     art_array: JSON[];
     avg_rating: number | null;
     created_at: string | null;
+    username: string | null;
     id: number;
     image_url: string | null;
     audio_url: string | undefined;
@@ -80,14 +81,14 @@ export default function Reviews({
             <p className="hover:underline">
               Art by:{" "}
               <span className="font-semibold">
-                {data?.user_id?.email?.split("@")[0] || "Random User"}
+                {data?.username || "Anonymous"}
               </span>
             </p>
             {/* <p>{data?.id}</p> */}
           </h6>
 
           <div className="text-sm">
-            Rating: <span className="font-semibold">{data?.avg_rating}/5</span>
+            {/* Rating: <span className="font-semibold">{data?.avg_rating}/5</span> */}
           </div>
           <div className="py-2 sm:flex sm:items-center sm:gap-2">
             <div className="flex items-center gap-1 text-gray-500">
@@ -116,11 +117,11 @@ export default function Reviews({
             </div>
           </div>
           <div className="">
-            <p>Royalty: {data?.royalty}</p>
+            {/* <p>Royalty: {data?.royalty}</p>
             <p>Percentage: {data?.percentage}</p>
             <p>Price: {data?.price}</p>
-            <p>NFT: {data?.nft}</p>
-            <p>Audio: {data?.audio_name}</p>
+            <p>NFT: {data?.nft}</p> */}
+            <p>Audio: {data?.audio_name||"No audio"}</p>
             {/* <p>{data?.audio_url}</p> */}
           </div>
 
