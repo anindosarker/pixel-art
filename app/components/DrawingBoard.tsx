@@ -328,89 +328,91 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           {renderGrid()}
         </div>
       </div>
-      <div className="flex flex-col mt-8 text-center">
-        <label className="block text-lg font-medium text-white">
-          <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
-          Upload MP3 file
-          <input
-            type="file"
-            accept="audio/mp3"
-            onChange={(e) => {
-              setAudioFile(e.target.files![0]);
-            }}
-            className="hidden"
-          />
-        </label>
-        {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>}
-      </div>
-      <div className="flex flex-col">
-        <div className="p-5 font-bold">
-          How many nfts do you want to mint?
-          <label htmlFor="nfts" className="block text-xs font-medium"></label>
-          <input
-            type="number"
-            placeholder=""
-            className="mt-1 p-2 w-full rounded-md text-black shadow-sm sm:text-sm"
-            onChange={(e) => {
-              setNft(parseInt(e.target.value));
-            }}
-            value={nft}
-          />
+      <div className="flex flex-col items-center justify-center">
+        <div className="mt-8 flex flex-col text-center">
+          <label className="block text-lg font-medium text-white">
+            <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
+            Upload MP3 file
+            <input
+              type="file"
+              accept="audio/mp3"
+              onChange={(e) => {
+                setAudioFile(e.target.files![0]);
+              }}
+              className="hidden"
+            />
+          </label>
+          {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>}
         </div>
-        <div className="p-5 font-bold">
-          Price in $OMP3?
-          <label htmlFor="nfts" className="block text-xs font-medium"></label>
-          <input
-            type="number"
-            placeholder=""
-            className="mt-1 p-2 w-full rounded-md text-black shadow-sm sm:text-sm"
-            onChange={(e) => {
-              setPrice(parseInt(e.target.value));
-            }}
-            value={price}
-          />
-        </div>
-        <div className="p-5">
-          <p className="mt-5 font-bold">
-            How much percentage do you want to give?
-          </p>
+        <div className="flex flex-col">
+          <div className="p-5 font-bold">
+            How many nfts do you want to mint?
+            <label htmlFor="nfts" className="block text-xs font-medium"></label>
+            <input
+              type="number"
+              placeholder=""
+              className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
+              onChange={(e) => {
+                setNft(parseInt(e.target.value));
+              }}
+              value={nft}
+            />
+          </div>
+          <div className="p-5 font-bold">
+            Price in $OMP3?
+            <label htmlFor="nfts" className="block text-xs font-medium"></label>
+            <input
+              type="number"
+              placeholder=""
+              className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
+              onChange={(e) => {
+                setPrice(parseInt(e.target.value));
+              }}
+              value={price}
+            />
+          </div>
+          <div className="p-5">
+            <p className="mt-5 font-bold">
+              How much percentage do you want to give?
+            </p>
 
-          <Slider
-            min={0}
-            max={100}
-            defaultValue={0}
-            value={percentage}
-            onChange={(e) => {
-              // @ts-ignore
-              setPercentage(e);
-            }}
-          />
-          <p className="font-bold">{percentage}%</p>
-        </div>
-        <div className="p-5">
-          <p className="mt-5 font-bold">
-            What royalty pecentage do you want per transaction?
-          </p>
+            <Slider
+              min={0}
+              max={100}
+              defaultValue={0}
+              value={percentage}
+              onChange={(e) => {
+                // @ts-ignore
+                setPercentage(e);
+              }}
+            />
+            <p className="font-bold">{percentage}%</p>
+          </div>
+          <div className="p-5">
+            <p className="mt-5 font-bold">
+              What royalty pecentage do you want per transaction?
+            </p>
 
-          <Slider
-            min={0}
-            max={10}
-            defaultValue={0}
-            value={royalty}
-            onChange={(e) => {
-              // @ts-ignore
-              setRoyalty(e);
-            }}
-          />
-          <p className="font-bold">{royalty}%</p>
+            <Slider
+              min={0}
+              max={10}
+              defaultValue={0}
+              value={royalty}
+              onChange={(e) => {
+                // @ts-ignore
+                setRoyalty(e);
+              }}
+            />
+            <p className="font-bold">{royalty}%</p>
+          </div>
         </div>
+        <button
+          className="mt-4 rounded bg-[#a2cea6ff] px-4 py-2 font-bold text-white hover:bg-[#b5e7b8]"
+          onClick={handleFinishClick}
+        >
+          MINT
+        </button>
       </div>
-      <button
-        className="mt-4 rounded bg-[#a2cea6ff] px-4 py-2 font-bold text-white hover:bg-[#b5e7b8]"
-        onClick={handleFinishClick}
-      >
-        MINT
-      </button>
     </div>
   );
 }

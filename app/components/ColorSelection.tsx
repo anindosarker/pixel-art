@@ -72,7 +72,7 @@ export default function ColorSelection({ setSelectedColor }: any) {
 
   return (
     <div className="mb-4 flex max-h-full max-w-2xl rounded-lg bg-white p-2 sm:p-4 shadow-md sm:mb-0">
-      <div className="mb-4 flex items-center justify-center gap-3 sm:mb-0 sm:flex-col">
+      <div className="mb-4 flex items-center justify-center gap-3 sm:gap-2 sm:mb-0 sm:flex-col">
         {rainbowColors.map((color, index) => (
           <Color
             key={index}
