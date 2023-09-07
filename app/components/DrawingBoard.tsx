@@ -31,9 +31,11 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [nft, setNft] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(0.0);
   const [percentage, setPercentage] = useState(0);
   const [royalty, setRoyalty] = useState(0);
+  const [audioName, setAudioName] = useState("");
+  const [username, setUsername] = useState("");
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
 
@@ -159,10 +161,9 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       )
       .join("");
 
-    // console.log(coloredDivsString);
-
     const data = {
       art_array: coloredDivsString,
+      username: "",
       image_url: "",
       audio_url: "",
       audio_name: "",
@@ -198,9 +199,10 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             audio_url = await handleAudioUpload(audioFile!);
             const data = {
               ...newData[0],
+              username: username,
               image_url: url,
               audio_url: audio_url,
-              audio_name: audioFile?.name,
+              audio_name: audioName,
             };
 
             const response = await fetch("/api/arts", {
@@ -227,9 +229,11 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             setSelectedDivs([]);
             setAudioFile(null);
             setNft(0);
-            setPrice(0);
+            setPrice(0.0);
             setPercentage(0);
             setRoyalty(0);
+            setAudioName("");
+            setUsername("");
 
             router.refresh();
           });
@@ -328,7 +332,18 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           {renderGrid()}
         </div>
       </div>
-      <div className="flex flex-col mt-8 text-center">
+      <div className="text center mt-8 flex flex-col">
+        <input
+          type="text"
+          placeholder="username..."
+          className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+      </div>
+      <div className="mt-8 flex flex-col text-center">
         <label className="block text-lg font-medium text-white">
           <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
           Upload MP3 file
@@ -341,7 +356,16 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             className="hidden"
           />
         </label>
-        {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>}
+        {/* {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>} */}
+        <input
+          type="text"
+          placeholder="enter audio name..."
+          className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
+          onChange={(e) => {
+            setAudioName(e.target.value);
+          }}
+          value={audioName}
+        />
       </div>
       <div className="flex flex-col">
         <div className="p-5 font-bold">
@@ -349,8 +373,8 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           <label htmlFor="nfts" className="block text-xs font-medium"></label>
           <input
             type="number"
-            placeholder=""
-            className="mt-1 p-2 w-full rounded-md text-black shadow-sm sm:text-sm"
+            placeholder="nft..."
+            className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
             onChange={(e) => {
               setNft(parseInt(e.target.value));
             }}
@@ -362,10 +386,10 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           <label htmlFor="nfts" className="block text-xs font-medium"></label>
           <input
             type="number"
-            placeholder=""
-            className="mt-1 p-2 w-full rounded-md text-black shadow-sm sm:text-sm"
+            placeholder="price..."
+            className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
             onChange={(e) => {
-              setPrice(parseInt(e.target.value));
+              setPrice(parseFloat(e.target.value));
             }}
             value={price}
           />
