@@ -41,31 +41,10 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
 
   let notification: string;
 
-  // const handleDivClick = (row: number, col: number) => {
-  //   if (!selectedColor) {
-  //     toast.error("Please select a color!", { id: notification });
-  //   }
-
-  //   const existingDiv = selectedDivs.find(
-  //     (div) => div.row === row && div.col === col
-  //   );
-
-  //   if (existingDiv && existingDiv.color === selectedColor) {
-  //     return;
-  //   }
-
-  //   const newSelectedDivs = selectedDivs.filter(
-  //     (div) => !(div.row === row && div.col === col)
-  //   );
-  //   const newDiv: DivColor = { row, col, color: selectedColor };
-  //   newSelectedDivs.push(newDiv);
-  //   setSelectedDivs(newSelectedDivs);
-  // };
-
   // maruf
   const handleDivClick = (row: number, col: number) => {
     if (!selectedColor) {
-      toast.error("Please select a color!", { id: notification });
+      toast.error("Please select a color!");
       return;
     }
 
@@ -139,6 +118,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       toast.error("Please select some colors!");
       return;
     }
+    notification = toast.loading("Uploading Art...");
 
     const coloredDivs = selectedDivs
       .filter((div) => div.color)
@@ -252,7 +232,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   };
 
   async function handleUpload(image: File) {
-    notification = toast.loading("Uploading Art...");
     const file = image;
     const fileName = `${v4()}.png`;
     const filePath = `${fileName}`;
@@ -273,7 +252,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   }
 
   async function handleAudioUpload(audio: File) {
-    notification = toast.loading("Uploading Audio...");
     const file = audio;
     const fileName = `${v4()}.mp3`;
     const filePath = `${fileName}`;
@@ -290,7 +268,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
     }
 
     const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/audio/${audioUploadData?.path}`;
-    toast.success("Audio uploaded successfully!", { id: notification });
     return url;
   }
 
@@ -332,45 +309,51 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           {renderGrid()}
         </div>
       </div>
-      <div className="text center mt-8 flex flex-col">
-        <input
-          type="text"
-          placeholder="username..."
-          className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
-      </div>
-      <div className="mt-8 flex flex-col text-center">
-        <label className="block text-lg font-medium text-white">
-          <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
-          Upload MP3 file
-          <input
-            type="file"
-            accept="audio/mp3"
-            onChange={(e) => {
-              setAudioFile(e.target.files![0]);
-            }}
-            className="hidden"
-          />
-        </label>
-        {/* {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>} */}
-        <input
-          type="text"
-          placeholder="enter audio name..."
-          className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
-          onChange={(e) => {
-            setAudioName(e.target.value);
-          }}
-          value={audioName}
-        />
-      </div>
+
       <div className="flex flex-col">
         <div className="p-5 font-bold">
-          How many nfts do you want to mint?
-          <label htmlFor="nfts" className="block text-xs font-medium"></label>
+          <label className="block text-lg font-medium text-white">
+            <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
+            Upload MP3 file
+            <input
+              type="file"
+              accept="audio/mp3"
+              onChange={(e) => {
+                setAudioFile(e.target.files![0]);
+              }}
+              className="hidden"
+            />
+          </label>
+          {/* {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>} */}
+          <input
+            type="text"
+            placeholder="enter audio name..."
+            className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
+            onChange={(e) => {
+              setAudioName(e.target.value);
+            }}
+            value={audioName}
+          />
+        </div>
+        <div className="p-5 font-bold">
+          <label htmlFor="username" className="block text-xs font-medium">
+            Username
+          </label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Please enter your username..."
+            className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+        </div>
+        <div className="p-5 font-bold">
+          <label htmlFor="nfts" className="block text-xs font-medium">
+            How many nfts do you want to mint?
+          </label>
           <input
             type="number"
             placeholder="nft..."
@@ -382,8 +365,9 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           />
         </div>
         <div className="p-5 font-bold">
-          Price in $OMP3?
-          <label htmlFor="nfts" className="block text-xs font-medium"></label>
+          <label htmlFor="nfts" className="block text-xs font-medium">
+            Price in $OMP3?
+          </label>
           <input
             type="number"
             placeholder="price..."
@@ -394,8 +378,8 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             value={price}
           />
         </div>
-        <div className="p-5">
-          <p className="mt-5 font-bold">
+        <div className="px-5 py-2">
+          <p className="py-4 font-bold">
             How much percentage do you want to give?
           </p>
 
@@ -411,8 +395,8 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           />
           <p className="font-bold">{percentage}%</p>
         </div>
-        <div className="p-5">
-          <p className="mt-5 font-bold">
+        <div className="px-5 py-2">
+          <p className="py-4 font-bold">
             What royalty pecentage do you want per transaction?
           </p>
 
