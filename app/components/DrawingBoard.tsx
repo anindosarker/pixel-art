@@ -23,7 +23,6 @@ interface DrawingBoardProps {
 
 export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const router = useRouter();
-  // const [artSubmitting, setArtSubmitting] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
   const [duplicateArt, setDuplicateArt] = useState(false);
@@ -41,7 +40,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
 
   let notification: string;
 
-  // maruf
   const handleDivClick = (row: number, col: number) => {
     if (!selectedColor) {
       toast.error("Please select a color!");
@@ -130,7 +128,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         return acc;
       }, {});
 
-    // Sort the indexes for each color
     for (const color in coloredDivs) {
       coloredDivs[color].sort();
     }
