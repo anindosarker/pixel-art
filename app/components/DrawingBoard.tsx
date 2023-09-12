@@ -342,7 +342,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             className="hidden"
           />
         </label>
-        {/* {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>} */}
         <input
           type="text"
           placeholder="enter audio name..."
