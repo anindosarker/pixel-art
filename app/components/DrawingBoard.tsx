@@ -35,6 +35,8 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const [royalty, setRoyalty] = useState(0);
   const [audioName, setAudioName] = useState("");
   const [username, setUsername] = useState("");
+  const [isAudioFile, setIsAudioFile] = useState(false);
+  const [isaudioFileName, setIsAudioFileName] = useState(false);
   const isMouseDown = useRef(false);
   const previousDiv = useRef<DivColor | null>(null);
 
@@ -112,8 +114,17 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   }, [selectedDivs]);
 
   const handleFinishClick = async () => {
+    if (!isAudioFile) {
+      toast.error("Please upload an audio file!", { id: notification });
+      return;
+    }
+    if (!isaudioFileName) {
+      toast.error("Please enter an audio name!", { id: notification });
+      return;
+    }
+
     if (selectedDivs.length === 0) {
-      toast.error("Please select some colors!");
+      toast.error("Please select some colors!", { id: notification });
       return;
     }
     notification = toast.loading("Uploading Art...");
@@ -211,8 +222,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             setRoyalty(0);
             setAudioName("");
             setUsername("");
-
-            router.refresh();
           });
         setFetch(false);
       })
@@ -292,7 +301,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       grid.push(
         <div key={i} className="flex flex-row" style={{ lineHeight: 0 }}>
           {row}
-        </div>,
+        </div>
       );
     }
     return <div className="flex flex-col">{grid}</div>;
@@ -317,17 +326,22 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
               accept="audio/mp3"
               onChange={(e) => {
                 setAudioFile(e.target.files![0]);
+              setIsAudioFile(true);
               }}
               className="hidden"
             />
           </label>
-          {/* {audioFile && <p className="mt-2 text-gray-400">{audioFile.name}</p>} */}
-          <input
+            <input
             type="text"
             placeholder="enter audio name..."
             className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
             onChange={(e) => {
               setAudioName(e.target.value);
+            if (e.target.value !== "") {
+              setIsAudioFileName(true);
+            } else {
+              setIsAudioFileName(false);
+            }
             }}
             value={audioName}
           />
