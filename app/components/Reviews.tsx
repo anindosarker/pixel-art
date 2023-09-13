@@ -47,7 +47,7 @@ export default function Reviews({
       ...prev,
       rating: selectedValue,
     }));
-    // console.log(selectedValue);
+
     const body = {
       rating: selectedValue,
       art_id: data?.id,
@@ -84,12 +84,9 @@ export default function Reviews({
                 {data?.username || "Anonymous"}
               </span>
             </p>
-            {/* <p>{data?.id}</p> */}
           </h6>
 
-          <div className="text-sm">
-            {/* Rating: <span className="font-semibold">{data?.avg_rating}/5</span> */}
-          </div>
+          <div className="text-sm"></div>
           <div className="py-2 sm:flex sm:items-center sm:gap-2">
             <div className="flex items-center gap-1 text-gray-500">
               <svg
@@ -108,29 +105,16 @@ export default function Reviews({
               </svg>
 
               <p className="text-sm font-medium">
-                {/* {format(new Date(data?.created_at || Date.now()), "PP")} */}
-                {formatDistanceToNow(
-                  new Date(data?.created_at || Date.now()),
-                )}{" "}
+                {formatDistanceToNow(new Date(data?.created_at || Date.now()))}{" "}
                 ago
               </p>
             </div>
           </div>
           <div className="">
-            {/* <p>Royalty: {data?.royalty}</p>
-            <p>Percentage: {data?.percentage}</p>
-            <p>Price: {data?.price}</p>
-            <p>NFT: {data?.nft}</p> */}
-            <p>Audio: {data?.audio_name||"No audio"}</p>
-            {/* <p>{data?.audio_url}</p> */}
+            <p>Audio: {data?.audio_name || "No audio"}</p>
           </div>
 
           <div className="mt-10">
-            {/* <Rating
-              style={{ maxWidth: 250 }}
-              value={state.rating}
-              onChange={handleRating}
-            /> */}
             {data?.audio_name && (
               <ReactAudioPlayer src={data?.audio_url} controls />
             )}

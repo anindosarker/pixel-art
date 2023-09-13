@@ -8,8 +8,7 @@ import ColorSelection from "./ColorSelection";
 import { supabase } from "@/lib/supabase";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import { BsPlusCircle, BsPlusCircleFill } from "react-icons/bs";
-// import handleAudioUpload from "../action/audioUpload";
+import { BsPlusCircleFill } from "react-icons/bs";
 
 interface DivColor {
   row: number;
@@ -303,7 +302,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       grid.push(
         <div key={i} className="flex flex-row" style={{ lineHeight: 0 }}>
           {row}
-        </div>
+        </div>,
       );
     }
     return <div className="flex flex-col">{grid}</div>;
