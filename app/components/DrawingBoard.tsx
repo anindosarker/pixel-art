@@ -320,7 +320,9 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         <div className="p-5 font-bold">
           <label className="block text-lg font-medium text-white">
             <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
-            Upload MP3 file
+                        {
+              audioFile ? audioFile?.name : "Upload MP3 File"
+            }
             <input
               type="file"
               accept="audio/mp3"
