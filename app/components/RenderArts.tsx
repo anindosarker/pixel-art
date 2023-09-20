@@ -23,30 +23,32 @@ export default function RenderArts({ fetch }: RenderArtsProps) {
     if (fetch) fetchArts(setLoading, selectedTab, setArts);
   }, [selectedTab, fetch]);
 
-  return (
-    <div
-      className="flex w-2/3 flex-col items-center justify-center gap-8"
-      ref={parentRef}
-    >
-      <div className="flex-col items-center justify-center">
-        {loading ? (
-          <div className="flex items-center justify-center">
-            <Waveform color="#fff" />
-          </div>
-        ) : arts.length !== 0 ? (
-          arts?.map((art, index) => (
+  if (loading) {
+    return (
+      <div className="">
+        <Waveform color="#fff" />
+      </div>
+    )
+  }
+
+return (
+  <div className="w-2/3" ref={parentRef}>
+    <div className="-mx-4 flex flex-wrap items-center">
+      {arts.length !== 0 ? (
+        arts.map((art, index) => (
+          <div key={index} className="mb-4 w-1/3 px-4">
             <Reviews
-              key={index}
               data={art}
               setLoading={setLoading}
               selectedTab={selectedTab}
               setArts={setArts}
             />
-          ))
-        ) : (
-          <div>No art found</div>
-        )}
-      </div>
+          </div>
+        ))
+      ) : (
+        <div className="w-full text-center">No art found</div>
+      )}
     </div>
-  );
+  </div>
+);
 }

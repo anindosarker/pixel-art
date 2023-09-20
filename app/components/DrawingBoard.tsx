@@ -1,5 +1,6 @@
 "use client";
 import domtoimage from "dom-to-image";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -8,9 +9,9 @@ import ColorSelection from "./ColorSelection";
 import { supabase } from "@/lib/supabase";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import { BsPlusCircle, BsPlusCircleFill } from "react-icons/bs";
-// import handleAudioUpload from "../action/audioUpload";
-
+import { BsPlusCircleFill, BsX } from "react-icons/bs";
+import handleUpload from "../action/imageUpload";
+import handleAudioUpload from "../action/audioUpload";
 interface DivColor {
   row: number;
   col: number;
@@ -29,6 +30,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const gridSize: number = 32;
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [userImg, setUserImg] = useState<File | null>(null);
   const [nft, setNft] = useState(0);
   const [price, setPrice] = useState(0.0);
   const [percentage, setPercentage] = useState(0);
@@ -154,6 +156,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       username: "",
       image_url: "",
       audio_url: "",
+      user_img: "",
       audio_name: "",
       nft: nft,
       price: price,
@@ -174,6 +177,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         let imageFile;
         let url: string;
         let audio_url: string;
+        let user_img: string;
         domtoimage
           //@ts-ignore
           .toBlob(node)
@@ -185,11 +189,13 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           .then(async () => {
             // TODO: upload image to supabase storage, and add new Art to supabase database
             audio_url = await handleAudioUpload(audioFile!);
+            user_img = await handleUpload(userImg!);
             const data = {
               ...newData[0],
               username: username,
               image_url: url,
               audio_url: audio_url,
+              user_img: user_img,
               audio_name: audioName,
             };
 
@@ -201,7 +207,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
               body: JSON.stringify(data),
             })
               .then((res) => {
-                toast.success("Art uploaded! 😀", { id: notification });
+                toast.success("Finished! 😀", { id: notification });
                 return res.json();
               })
               .catch((err) => {
@@ -216,6 +222,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             setFetch(true);
             setSelectedDivs([]);
             setAudioFile(null);
+            setUserImg(null);
             setNft(0);
             setPrice(0.0);
             setPercentage(0);
@@ -236,46 +243,6 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         toast.error(`Duplicate art!`, { id: notification });
       });
   };
-
-  async function handleUpload(image: File) {
-    const file = image;
-    const fileName = `${v4()}.png`;
-    const filePath = `${fileName}`;
-
-    const { data: imageUploadData, error: imageUploadError } =
-      await supabase.storage.from("images").upload(filePath, file!);
-
-    if (imageUploadError) {
-      console.log(
-        "🚀 ~ file: NewCreation.tsx:59 ~ handleFileUpload ~ imageUploadError:\n",
-        imageUploadError,
-      );
-      toast.error("Image Upload error!", { id: notification });
-    }
-    const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${imageUploadData?.path}`;
-    toast.success("Art uploaded successfully!", { id: notification });
-    return url;
-  }
-
-  async function handleAudioUpload(audio: File) {
-    const file = audio;
-    const fileName = `${v4()}.mp3`;
-    const filePath = `${fileName}`;
-
-    const { data: audioUploadData, error: audioUploadError } =
-      await supabase.storage.from("audio").upload(filePath, file!);
-
-    if (audioUploadError) {
-      console.log(
-        "🚀 ~ file: audioUpload.ts ~ handleUpload ~ audioUploadError:\n",
-        audioUploadError,
-      );
-      toast.error("Audio Upload error!", { id: notification });
-    }
-
-    const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/audio/${audioUploadData?.path}`;
-    return url;
-  }
 
   const renderGrid = () => {
     const grid = [];
@@ -301,7 +268,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       grid.push(
         <div key={i} className="flex flex-row" style={{ lineHeight: 0 }}>
           {row}
-        </div>
+        </div>,
       );
     }
     return <div className="flex flex-col">{grid}</div>;
@@ -318,32 +285,30 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
 
       <div className="flex flex-col">
         <div className="p-5 font-bold">
-          <label className="block text-lg font-medium text-white">
+          <label className="mt-2 block text-lg font-medium text-white">
             <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
-                        {
-              audioFile ? audioFile?.name : "Upload MP3 File"
-            }
+            {audioFile ? audioFile?.name : "Upload MP3 File"}
             <input
               type="file"
               accept="audio/mp3"
               onChange={(e) => {
                 setAudioFile(e.target.files![0]);
-              setIsAudioFile(true);
+                setIsAudioFile(true);
               }}
               className="hidden"
             />
           </label>
-            <input
+          <input
             type="text"
             placeholder="enter audio name..."
             className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
             onChange={(e) => {
               setAudioName(e.target.value);
-            if (e.target.value !== "") {
-              setIsAudioFileName(true);
-            } else {
-              setIsAudioFileName(false);
-            }
+              if (e.target.value !== "") {
+                setIsAudioFileName(true);
+              } else {
+                setIsAudioFileName(false);
+              }
             }}
             value={audioName}
           />
@@ -362,6 +327,39 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
               setUsername(e.target.value);
             }}
           />
+          <label className="mt-2 block text-lg font-medium text-white">
+            {userImg ? (
+              <button
+                onClick={() => setUserImg(null)}
+                className="inline-block cursor-pointer"
+              >
+                <BsX className="mr-2" />
+              </button>
+            ) : (
+              <>
+                <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
+                Upload User Image
+                <input
+                  type="file"
+                  accept=".jpg, .png, .jpeg, .webp"
+                  onChange={(e) => {
+                    setUserImg(e.target.files![0]);
+                  }}
+                  className="hidden"
+                />
+              </>
+            )}
+
+            {userImg && (
+              <Image
+                src={URL.createObjectURL(userImg)}
+                alt="user"
+                className="h-10 w-10 rounded-full object-cover"
+                width={10}
+                height={10}
+              />
+            )}
+          </label>
         </div>
         <div className="p-5 font-bold">
           <label htmlFor="nfts" className="block text-xs font-medium">
