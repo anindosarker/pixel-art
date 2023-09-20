@@ -48,7 +48,7 @@ export default function Reviews({
       ...prev,
       rating: selectedValue,
     }));
-    
+
     const body = {
       rating: selectedValue,
       art_id: data?.id,
@@ -74,7 +74,7 @@ export default function Reviews({
               alt="usr"
               width={20}
               height={30}
-              className="rounded-full object-cover"
+              className="rounded-full"
             />
           )}
           <p className="hover:underline">
@@ -99,7 +99,7 @@ export default function Reviews({
           <div className="text-sm">
             {/* Rating: <span className="font-semibold">{data?.avg_rating}/5</span> */}
           </div>
-          <div className="mt-4 flex flex-col items-start justify-center gap-4">
+          <div className="mt-4 flex flex-col items-start justify-center gap-2 text-sm">
             {/* <p>Royalty: {data?.royalty}</p>
             <p>Percentage: {data?.percentage}</p>
             <p>Price: {data?.price}</p>
@@ -107,7 +107,7 @@ export default function Reviews({
 
             <p>Audio: {data?.audio_name || "No audio"}</p>
             <p>1 of {data?.nft} nfts</p>
-            <p>{data?.price}OMP3</p>
+            <p>{data?.price} OMP3</p>
           </div>
 
           <div className="mt-10">
