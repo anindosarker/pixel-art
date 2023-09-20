@@ -24,6 +24,7 @@ export default function Reviews({
     id: number;
     image_url: string | null;
     audio_url: string | undefined;
+    user_img: string | null;
     audio_name: string | null;
     price: number | null;
     percentage: number | null;
@@ -47,7 +48,7 @@ export default function Reviews({
       ...prev,
       rating: selectedValue,
     }));
-    // console.log(selectedValue);
+    
     const body = {
       rating: selectedValue,
       art_id: data?.id,
@@ -66,6 +67,22 @@ export default function Reviews({
   return (
     <article className="mb-5 rounded-xl border border-white bg-black p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
       <div className="flex flex-col items-start sm:gap-8">
+        <div className="flex gap-3">
+          {data?.user_img && (
+            <Image
+              src={data?.user_img}
+              alt="usr"
+              width={20}
+              height={30}
+              className="rounded-full object-cover"
+            />
+          )}
+          <p className="hover:underline">
+            <span className="font-semibold">
+              {data?.username || "Anonymous"}
+            </span>
+          </p>
+        </div>
         <div className="">
           <Image
             src={data?.image_url || "/images/art (3).png"}
@@ -77,18 +94,26 @@ export default function Reviews({
         </div>
 
         <div>
-          <h6 className="text-sm">
-            <p className="hover:underline">
-              Art by:{" "}
-              <span className="font-semibold">
-                {data?.username || "Anonymous"}
-              </span>
-            </p>
-            {/* <p>{data?.id}</p> */}
-          </h6>
+          <h6 className="text-sm">{/* <p>{data?.id}</p> */}</h6>
 
           <div className="text-sm">
             {/* Rating: <span className="font-semibold">{data?.avg_rating}/5</span> */}
+          </div>
+          <div className="mt-4 flex flex-col items-start justify-center gap-4">
+            {/* <p>Royalty: {data?.royalty}</p>
+            <p>Percentage: {data?.percentage}</p>
+            <p>Price: {data?.price}</p>
+            <p>NFT: {data?.nft}</p> */}
+
+            <p>Audio: {data?.audio_name || "No audio"}</p>
+            <p>1 of {data?.nft} nfts</p>
+            <p>{data?.price}OMP3</p>
+          </div>
+
+          <div className="mt-10">
+            {data?.audio_name && (
+              <ReactAudioPlayer src={data?.audio_url} controls />
+            )}
           </div>
           <div className="py-2 sm:flex sm:items-center sm:gap-2">
             <div className="flex items-center gap-1 text-gray-500">
@@ -108,33 +133,14 @@ export default function Reviews({
               </svg>
 
               <p className="text-sm font-medium">
-                {/* {format(new Date(data?.created_at || Date.now()), "PP")} */}
-                {formatDistanceToNow(
-                  new Date(data?.created_at || Date.now()),
-                )}{" "}
+                {formatDistanceToNow(new Date(data?.created_at || Date.now()))}{" "}
                 ago
               </p>
             </div>
           </div>
-          <div className="">
-            {/* <p>Royalty: {data?.royalty}</p>
-            <p>Percentage: {data?.percentage}</p>
-            <p>Price: {data?.price}</p>
-            <p>NFT: {data?.nft}</p> */}
-            <p>Audio: {data?.audio_name||"No audio"}</p>
-            {/* <p>{data?.audio_url}</p> */}
-          </div>
-
-          <div className="mt-10">
-            {/* <Rating
-              style={{ maxWidth: 250 }}
-              value={state.rating}
-              onChange={handleRating}
-            /> */}
-            {data?.audio_name && (
-              <ReactAudioPlayer src={data?.audio_url} controls />
-            )}
-          </div>
+          <button className="mt-6 w-full rounded-lg bg-[#fff] px-4 py-2 font-bold text-black hover:bg-[#413f3f] hover:text-white">
+            BUY
+          </button>
         </div>
       </div>
     </article>
