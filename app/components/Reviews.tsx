@@ -67,15 +67,17 @@ export default function Reviews({
   return (
     <article className="mb-5 rounded-xl border border-white bg-black p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
       <div className="flex flex-col items-start sm:gap-8">
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           {data?.user_img && (
-            <Image
-              src={data?.user_img}
-              alt="usr"
-              width={20}
-              height={30}
-              className="rounded-full"
-            />
+            <div className="">
+              <Image
+                src={data?.user_img}
+                alt="usr"
+                width={25}
+                height={20}
+                className="rounded-full object-cover h-full"
+              />
+            </div>
           )}
           <p className="hover:underline">
             <span className="font-semibold">
@@ -93,7 +95,7 @@ export default function Reviews({
           />
         </div>
 
-        <div>
+        <div className="flex w-full flex-col">
           <h6 className="text-sm">{/* <p>{data?.id}</p> */}</h6>
 
           <div className="text-sm">
@@ -112,7 +114,11 @@ export default function Reviews({
 
           <div className="mt-10">
             {data?.audio_name && (
-              <ReactAudioPlayer src={data?.audio_url} controls />
+              <ReactAudioPlayer
+                src={data?.audio_url}
+                controls
+                className="md:w-full"
+              />
             )}
           </div>
           <div className="py-2 sm:flex sm:items-center sm:gap-2">
