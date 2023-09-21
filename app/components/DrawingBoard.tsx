@@ -31,6 +31,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
   const [selectedDivs, setSelectedDivs] = useState<DivColor[]>([]);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [userImg, setUserImg] = useState<File | null>(null);
+  const [genre, setGenre] = useState("");
   const [nft, setNft] = useState(0);
   const [price, setPrice] = useState(0.0);
   const [percentage, setPercentage] = useState(0);
@@ -158,6 +159,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
       audio_url: "",
       user_img: "",
       audio_name: "",
+      genre:"",
       nft: nft,
       price: price,
       percentage: percentage,
@@ -197,6 +199,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
               audio_url: audio_url,
               user_img: user_img,
               audio_name: audioName,
+              genre:genre
             };
 
             const response = await fetch("/api/arts", {
@@ -229,6 +232,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             setRoyalty(0);
             setAudioName("");
             setUsername("");
+            setGenre("");
           });
         setFetch(false);
       })
@@ -338,7 +342,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             ) : (
               <>
                 <BsPlusCircleFill className="mr-2 inline-block cursor-pointer" />
-                Upload User Image
+                Upload Profile Picture
                 <input
                   type="file"
                   accept=".jpg, .png, .jpeg, .webp"
@@ -360,6 +364,20 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
               />
             )}
           </label>
+        </div>
+        <div className="p-5 font-bold">
+          <label htmlFor="genre" className="block text-xs font-medium">
+            Enter Genre
+          </label>
+          <input
+            type="text"
+            placeholder="genre..."
+            className="mt-1 w-full rounded-md p-2 text-black shadow-sm sm:text-sm"
+            onChange={(e) => {
+              setGenre(e.target.value)
+            }}
+            value={genre}
+          />
         </div>
         <div className="p-5 font-bold">
           <label htmlFor="nfts" className="block text-xs font-medium">
