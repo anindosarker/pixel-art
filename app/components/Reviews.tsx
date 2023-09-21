@@ -30,6 +30,7 @@ export default function Reviews({
     percentage: number | null;
     royalty: number | null;
     nft: boolean | null;
+    genre: string | null;
     user_id: {
       email: string | null;
     };
@@ -106,7 +107,7 @@ export default function Reviews({
             <p>Percentage: {data?.percentage}</p>
             <p>Price: {data?.price}</p>
             <p>NFT: {data?.nft}</p> */}
-
+            <p>Genre: {data?.genre || "Not specified"}</p>
             <p>Audio: {data?.audio_name || "No audio"}</p>
             <p>1 of {data?.nft} nfts</p>
             <p>{data?.price} OMP3</p>
