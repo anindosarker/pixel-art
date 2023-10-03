@@ -20,9 +20,10 @@ interface DivColor {
 
 interface DrawingBoardProps {
   setFetch: any;
+  setArts: any;
 }
 
-export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
+export default function DrawingBoard({ setFetch, setArts }: DrawingBoardProps) {
   const router = useRouter();
   const [selectedColor, setSelectedColor] = useState("");
   const [artExistsMsg, setArtExistsMsg] = useState("");
@@ -191,6 +192,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
           .then(async () => {
             // TODO: upload image to supabase storage, and add new Art to supabase database
             audio_url = await handleAudioUpload(audioFile!);
+            if (userImg)
             user_img = await handleUpload(userImg!);
             const data = {
               ...newData[0],
@@ -211,6 +213,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             })
               .then((res) => {
                 toast.success("Finished! 😀", { id: notification });
+                setArts((prev: any) => [data, ...prev]);
                 return res.json();
               })
               .catch((err) => {
@@ -222,7 +225,9 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
                 setArtExistsMsg("Art already exists!");
                 toast.error(`Duplicate art!`, { id: notification });
               });
+            // window.location.reload();
             setFetch(true);
+            console.log(fetch)
             setSelectedDivs([]);
             setAudioFile(null);
             setUserImg(null);
@@ -234,7 +239,7 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
             setUsername("");
             setGenre("");
           });
-        setFetch(false);
+        setFetch(false)
       })
 
       .catch((err) => {
@@ -246,6 +251,8 @@ export default function DrawingBoard({ setFetch }: DrawingBoardProps) {
         setArtExistsMsg("Art already exists!");
         toast.error(`Duplicate art!`, { id: notification });
       });
+      setFetch(false);
+      console.log(fetch)
   };
 
   const renderGrid = () => {

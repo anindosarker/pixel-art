@@ -12,27 +12,54 @@ export interface Database {
       arts: {
         Row: {
           art_array: string
+          audio_name: string | null
+          audio_url: string | null
           avg_rating: number | null
           created_at: string | null
+          genre: string | null
           id: number
           image_url: string | null
+          nft: number | null
+          percentage: number | null
+          price: number | null
+          royalty: number | null
           user_id: string | null
+          user_img: string | null
+          username: string
         }
         Insert: {
           art_array: string
+          audio_name?: string | null
+          audio_url?: string | null
           avg_rating?: number | null
           created_at?: string | null
+          genre?: string | null
           id?: number
           image_url?: string | null
+          nft?: number | null
+          percentage?: number | null
+          price?: number | null
+          royalty?: number | null
           user_id?: string | null
+          user_img?: string | null
+          username: string
         }
         Update: {
           art_array?: string
+          audio_name?: string | null
+          audio_url?: string | null
           avg_rating?: number | null
           created_at?: string | null
+          genre?: string | null
           id?: number
           image_url?: string | null
+          nft?: number | null
+          percentage?: number | null
+          price?: number | null
+          royalty?: number | null
           user_id?: string | null
+          user_img?: string | null
+          username?: string
         }
         Relationships: [
           {

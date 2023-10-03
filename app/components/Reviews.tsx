@@ -44,39 +44,49 @@ export default function Reviews({
     rating: Math.floor(data?.avg_rating as number) || 0,
   });
 
-  const handleRating = async (selectedValue: number) => {
-    setState((prev) => ({
-      ...prev,
-      rating: selectedValue,
-    }));
+  // const handleRating = async (selectedValue: number) => {
+  //   setState((prev) => ({
+  //     ...prev,
+  //     rating: selectedValue,
+  //   }));
 
-    const body = {
-      rating: selectedValue,
-      art_id: data?.id,
-      description: "",
-    };
-    const response = await axios
-      .post("/api/review", body)
-      .then((res) => {
-        toast.success("Review added!");
-        router.refresh();
-        fetchArts(setLoading, selectedTab, setArts);
-      })
-      .catch((err) => toast.error("Error adding review!"));
-  };
+  //   const body = {
+  //     rating: selectedValue,
+  //     art_id: data?.id,
+  //     description: "",
+  //   };
+  //   const response = await axios
+  //     .post("/api/review", body)
+  //     .then((res) => {
+  //       toast.success("Review added!");
+  //       router.refresh();
+        // fetchArts(setLoading, selectedTab, setArts);
+  //     })
+  //     .catch((err) => toast.error("Error adding review!"));
+  // };
 
   return (
     <article className="mb-5 rounded-xl border border-white bg-black p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
       <div className="flex flex-col items-start sm:gap-8">
         <div className="flex gap-2">
-          {data?.user_img && (
+          {data?.user_img ? (
             <div className="">
               <Image
                 src={data?.user_img}
                 alt="usr"
                 width={25}
                 height={20}
-                className="rounded-full object-cover h-full"
+                className="h-full rounded-full object-cover"
+              />
+            </div>
+          ) : (
+            <div className="">
+              <Image
+                src="/images/user.jpeg"
+                alt="usr"
+                width={25}
+                height={20}
+                className="h-full rounded-full object-cover"
               />
             </div>
           )}
