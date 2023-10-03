@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import axios from "axios";
 import DrawingBoard from "./DrawingBoard";
 import Navbar from "./Navbar";
 import RenderArts from "./RenderArts";
@@ -7,6 +8,14 @@ import RenderArts from "./RenderArts";
 export default function Canvas() {
   const [fetch, setFetch] = useState(false);
   const [arts, setArts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = async () => {
+    const response = await axios.get(`/api/search?query=${searchQuery}`);
+    console.log(response.data)
+    setArts(response.data);
+  };
+
   return (
     <>
       <Navbar />
@@ -24,8 +33,9 @@ export default function Canvas() {
             type="search"
             name="search"
             placeholder="Search"
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button type="submit" className="absolute right-0 top-0 mr-4 mt-5">
+          <button className="absolute right-0 top-0 mr-4 mt-5" onClick={handleSearch}>
             <svg
               className="h-4 w-4 fill-current text-gray-600"
               xmlns="http://www.w3.org/2000/svg"
