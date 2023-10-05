@@ -1,4 +1,3 @@
-import { Json } from './../../../lib/database.types';
 import { Database } from "@/lib/database.types";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -22,23 +21,34 @@ export async function GET(request: Request) {
 
   const pagination = getPagination(page, size);
 
-  if (filter === "rating") {
+  if (filter === "timeA") {
     let { data, error } = await supabase
       .from("arts")
       .select(`*, user_id(*)`)
-      .order("avg_rating", { ascending: false })
+      .order("created_at", { ascending: true })
       .range(pagination.from, pagination.to);
 
     if (error) {
       return NextResponse.error();
     }
-
     return NextResponse.json(data);
-  } else {
+  } else if (filter === "timeD") {
     let { data, error } = await supabase
       .from("arts")
       .select(`*, user_id(*)`)
       .order("created_at", { ascending: false })
+      .range(pagination.from, pagination.to);
+
+    if (error) {
+      return NextResponse.json(error, { status: 500 });
+    }
+
+    return NextResponse.json(data);
+  } else if (filter === "price") {
+    let { data, error } = await supabase
+      .from("arts")
+      .select(`*, user_id(*)`)
+      .order("price", { ascending: false })
       .range(pagination.from, pagination.to);
 
     if (error) {
