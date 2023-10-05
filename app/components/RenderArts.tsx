@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import autoAnimate from "@formkit/auto-animate";
 import { Waveform } from "@uiball/loaders";
 import Reviews from "./Reviews";
 import "react-tabs/style/react-tabs.css";
@@ -131,4 +130,5 @@ function CustomTab({ label, onClick, selected }: any) {
     </div>
   );
 }
+
 
