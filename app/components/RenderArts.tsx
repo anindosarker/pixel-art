@@ -29,6 +29,7 @@ export default function RenderArts({ arts, setArts, fetch }: RenderArtsProps) {
         !loading &&
         currentPage < Math.ceil(arts.length / itemsPerPage)
       ) {
+        console.log("fetching arts")
         setCurrentPage(currentPage + 1);
       }
     };
