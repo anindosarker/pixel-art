@@ -44,29 +44,9 @@ export default function Reviews({
     rating: Math.floor(data?.avg_rating as number) || 0,
   });
 
-  // const handleRating = async (selectedValue: number) => {
-  //   setState((prev) => ({
-  //     ...prev,
-  //     rating: selectedValue,
-  //   }));
-
-  //   const body = {
-  //     rating: selectedValue,
-  //     art_id: data?.id,
-  //     description: "",
-  //   };
-  //   const response = await axios
-  //     .post("/api/review", body)
-  //     .then((res) => {
-  //       toast.success("Review added!");
-  //       router.refresh();
-        // fetchArts(setLoading, selectedTab, setArts);
-  //     })
-  //     .catch((err) => toast.error("Error adding review!"));
-  // };
 
   return (
-    <article className="mb-5 rounded-xl border border-white bg-black p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
+    <article className="mb-5 rounded-xl border border-white bg-black p-4 ring ring-indigo-50 sm:p-6 lg:p-8 max-h-[1/3]">
       <div className="flex flex-col items-start sm:gap-8">
         <div className="flex gap-2">
           {data?.user_img ? (
@@ -107,16 +87,12 @@ export default function Reviews({
         </div>
 
         <div className="flex w-full flex-col">
-          <h6 className="text-sm">{/* <p>{data?.id}</p> */}</h6>
+         
 
           <div className="text-sm">
-            {/* Rating: <span className="font-semibold">{data?.avg_rating}/5</span> */}
+            
           </div>
           <div className="mt-4 flex flex-col items-start justify-center gap-2 text-sm">
-            {/* <p>Royalty: {data?.royalty}</p>
-            <p>Percentage: {data?.percentage}</p>
-            <p>Price: {data?.price}</p>
-            <p>NFT: {data?.nft}</p> */}
             <p>Genre: {data?.genre || "Not specified"}</p>
             <p>Audio: {data?.audio_name || "No audio"}</p>
             <p>1 of {data?.nft} nfts</p>
@@ -163,3 +139,4 @@ export default function Reviews({
     </article>
   );
 }
+

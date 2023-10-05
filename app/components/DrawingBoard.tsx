@@ -213,7 +213,7 @@ export default function DrawingBoard({ setFetch, setArts }: DrawingBoardProps) {
             })
               .then((res) => {
                 toast.success("Finished! 😀", { id: notification });
-                setArts((prev: any) => [data, ...prev]);
+                // setArts((prev: any) => [data, ...prev]);
                 return res.json();
               })
               .catch((err) => {
