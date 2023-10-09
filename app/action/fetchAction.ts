@@ -18,6 +18,10 @@ export const fetchArts = async (
         `/api/arts?page=${page}&size=${size}&filter=${filter}`
     ).then((res) => res.json());
 
-    setArts((prevArts: any[]) => [...prevArts, ...response]); 
+    if (page === 1) {
+        setArts(response);
+    } else {
+        setArts((prevArts: any[]) => [...prevArts, ...response]);
+    }
     setLoading(false);
 };
