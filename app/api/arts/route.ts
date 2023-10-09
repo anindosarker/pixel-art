@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 const getPagination = (page: number, size: number) => {
-  const limit = size ? +size : 6; // Change the default page size to 6
+  const limit = size ? +size : 6;
   const from = page ? (page - 1) * limit : 0;
   const to = page ? from + limit : limit;
 

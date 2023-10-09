@@ -30,10 +30,11 @@ export default function RenderArts({ arts, setArts, fetch }: RenderArtsProps) {
         currentPage < Math.ceil(arts.length / itemsPerPage)
       ) {
         console.log("fetching arts")
+        
         setCurrentPage(currentPage + 1);
       }
     };
-
+   
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -131,5 +132,3 @@ function CustomTab({ label, onClick, selected }: any) {
     </div>
   );
 }
-
-
