@@ -51,7 +51,7 @@ export default function Reviews({
        <div className="flex gap-2">
          {data?.user_img ? (
            <div className="">
-             <Image
+             <img
                src={data?.user_img}
                alt="usr"
                width={25}
@@ -61,7 +61,7 @@ export default function Reviews({
            </div>
          ) : (
            <div className="">
-             <Image
+             <img
                src="/images/user.jpeg"
                alt="usr"
                width={25}
@@ -77,7 +77,7 @@ export default function Reviews({
          </p>
        </div>
        <div className="">
-         <Image
+         <img
            src={data?.image_url || "/images/art (3).png"}
            alt="art"
            width={300}
