@@ -17,7 +17,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const filter = searchParams.get("filter");
   const page = parseInt(searchParams.get("page") || "1");
-  const size = parseInt(searchParams.get("size") || "5"); 
+  const size = parseInt(searchParams.get("size") || "6"); 
 
   const pagination = getPagination(page, size);
 
@@ -58,7 +58,6 @@ export async function GET(request: Request) {
     return NextResponse.json(data);
   }
 }
-
 
 export async function POST(req: NextRequest) {
   const supabase = createServerComponentClient<Database>({ cookies });

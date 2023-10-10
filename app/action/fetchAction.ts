@@ -1,27 +1,16 @@
 export const fetchArts = async (
     setLoading: any,
-    selectedTab: any,
+    filter: string,
     setArts: any,
-    page: number, 
-    size: number 
+    page: number,
+    size: number
 ) => {
     setLoading(true);
-    let filter = ""
-    console.log(selectedTab)
-    if (selectedTab === "timeA") filter = "timeA"
-    else if (selectedTab === "timeD") filter = "timeD"
-    else if (selectedTab === "price") filter = "price"
-    else filter = "timeA"
-
-    console.log(filter)
-    const response = await fetch(
-        `/api/arts?page=${page}&size=${size}&filter=${filter}`
-    ).then((res) => res.json());
-
-    if (page === 1) {
-        setArts(response);
-    } else {
-        setArts((prevArts: any[]) => [...prevArts, ...response]);
-    }
+    const response = await fetch(`/api/arts?filter=${filter}&page=${page}&size=${size}`);
+    const data = await response.json();
+    setArts((prevArts: any) => {
+        const newArts = data.filter((art: any) => !prevArts.some((prevArt: any) => prevArt.art_array === art.art_array));
+        return [...prevArts, ...newArts];
+    });
     setLoading(false);
 };
