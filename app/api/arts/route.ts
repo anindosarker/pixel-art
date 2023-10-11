@@ -44,11 +44,25 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json(data);
-  } else if (filter === "price") {
+  } else if (filter === "price") { 
+    console.log("dhukse1")
     let { data, error } = await supabase
       .from("arts")
       .select(`*, user_id(*)`)
       .order("price", { ascending: false })
+      .range(pagination.from, pagination.to);
+
+    if (error) {
+      return NextResponse.json(error, { status: 500 });
+    }
+
+    return NextResponse.json(data);
+  } else if (filter === "priceD") {
+    console.log("dhukse")
+    let { data, error } = await supabase
+      .from("arts")
+      .select(`*, user_id(*)`)
+      .order("price", { ascending: true })
       .range(pagination.from, pagination.to);
 
     if (error) {

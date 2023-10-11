@@ -3,7 +3,6 @@ import { Waveform } from "@uiball/loaders";
 import Reviews from "./Reviews";
 import "react-tabs/style/react-tabs.css";
 import { fetchArts } from "../action/fetchAction";
-import { set } from "date-fns";
 
 interface RenderArtsProps {
   arts: any;
@@ -64,8 +63,24 @@ export default function RenderArts({ arts, setArts, fetch }: RenderArtsProps) {
     if (selectedTab !== tab) {
       setSelectedTab(tab);
       fetchFirstPage();
+    } 
+    if (selectedTab === tab) {
+      setSelectedTab("timeA")
+      fetchFirstPage();
     }
   };
+
+  const handlePriceTabClick = (tab: string) => {
+    console.log(selectedTab)
+    if (selectedTab !== tab) {
+      setSelectedTab(tab);
+      fetchFirstPage();
+    }
+    if (selectedTab === tab) {
+      setSelectedTab("priceD")
+      fetchFirstPage();
+    }
+  }
 
   const filteredArts = () => {
     let sortedArts = [...arts];
@@ -82,6 +97,8 @@ export default function RenderArts({ arts, setArts, fetch }: RenderArtsProps) {
       );
     } else if (selectedTab === "price") {
       sortedArts.sort((a, b) => a.price - b.price);
+    } else if (selectedTab === "priceD") {
+      sortedArts.sort((a, b) => b.price - a.price);
     }
 
     return sortedArts.slice(0, currentPage * itemsPerPage);
@@ -104,19 +121,39 @@ export default function RenderArts({ arts, setArts, fetch }: RenderArtsProps) {
       <div className="">
         <div className="mb-10 flex space-x-4">
           <CustomTab
-            label="Latest"
-            onClick={() => handleTabClick("timeD")}
-            selected={selectedTab === "timeD"}
+            label={
+              selectedTab === "timeA"
+                ? "Oldest"
+                : "Most Recent"
+            }
+            onClick={() => {
+              if (selectedTab === "timeA") {
+                handleTabClick("timeD");
+              } else {
+                handleTabClick("timeA");
+              }
+            }}
+            selected={selectedTab === "timeD" || selectedTab === "timeA"}
           />
           <CustomTab
-            label="Oldest"
-            onClick={() => handleTabClick("timeA")}
-            selected={selectedTab === "timeA"}
+            label={
+              selectedTab === "price"
+                ? "Price(Low-High)"
+                : "Price(High-Low)"
+            }
+            onClick={() => {
+              if (selectedTab === "price") {
+                handlePriceTabClick("priceD");
+              } else {
+                handlePriceTabClick("price");
+              }
+            }}
+            selected={selectedTab === "price" || selectedTab === "priceD"}
           />
           <CustomTab
-            label="Price"
-            onClick={() => handleTabClick("price")}
-            selected={selectedTab === "price"}
+          label="Volume"
+          onClick={() => {}}
+          selected={false}
           />
         </div>
       </div>
