@@ -71,7 +71,6 @@ export default function RenderArts({ arts, setArts, fetch }: RenderArtsProps) {
   };
 
   const handlePriceTabClick = (tab: string) => {
-    console.log(selectedTab)
     if (selectedTab !== tab) {
       setSelectedTab(tab);
       fetchFirstPage();

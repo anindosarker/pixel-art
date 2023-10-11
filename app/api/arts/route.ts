@@ -45,7 +45,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data);
   } else if (filter === "price") { 
-    console.log("dhukse1")
     let { data, error } = await supabase
       .from("arts")
       .select(`*, user_id(*)`)
@@ -58,7 +57,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data);
   } else if (filter === "priceD") {
-    console.log("dhukse")
     let { data, error } = await supabase
       .from("arts")
       .select(`*, user_id(*)`)
